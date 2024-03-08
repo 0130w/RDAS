@@ -1,14 +1,13 @@
 # import
 from pyspark.sql import SparkSession
 from epics import  epic1
+from epics import epic5
 
 # Driver
 spark = SparkSession \
     .builder \
     .master('local') \
     .appName('SparkProj') \
-    .config("spark.sql.parquet.output.committer.class", "org.apache.spark.sql.parquet.DirectParquetOutputCommitter") \
- \
     .getOrCreate()
 
 # define dataset files path
@@ -33,3 +32,11 @@ user_path = 'dataset/yelp_academic_dataset_user.json'
 # epic1.epic1_task9(b_df).show()
 # epic1.epic1_task10(b_df).show()
 # epic1.epic1_task11(b_df).show()
+
+review_df = spark.read.json(review_path)
+
+a, b, c = epic5.epic5_task2(review_df)
+a.show()
+b.show()
+c.show()
+

@@ -1,4 +1,4 @@
-from pyspark.ml.clustering import KMeans
+from pyspark.ml.clustering import KMeansModel, KMeans
 from pyspark.ml.feature import VectorAssembler, StandardScaler
 from pyspark.sql.dataframe import DataFrame
 
@@ -22,7 +22,7 @@ def kmeans_train(features, user_data: DataFrame):
     kmeans.fit(scaled_user_feature_df).save('models/kmeans.joblib')
 
 
-def kmeans_test(features, user_data: DataFrame):
+def kmeans_predict(features, user_data: DataFrame) -> DataFrame:
     scaled_user_feature_df = kmeans_scalar(features, user_data)
-    kmeans_model = KMeans.load("models/kmeans.joblib")
+    kmeans_model = KMeansModel.load("models/kmeans.joblib")
     return kmeans_model.transform(scaled_user_feature_df)
