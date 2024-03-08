@@ -2,8 +2,6 @@ from functools import reduce
 
 from typing import Tuple
 
-from pyspark.sql import DataFrame
-
 from algorithms import kmeans
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.functions import year, col, size, split, explode, regexp_replace
