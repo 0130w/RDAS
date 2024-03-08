@@ -6,8 +6,6 @@ spark = SparkSession \
     .builder \
     .master('local') \
     .appName('SparkProj') \
-    .config("spark.sql.parquet.output.committer.class", "org.apache.spark.sql.parquet.DirectParquetOutputCommitter") \
- \
     .getOrCreate()
 
 # define dataset files path
