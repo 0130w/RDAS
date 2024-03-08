@@ -1,10 +1,8 @@
 from functools import reduce
-
 from typing import Tuple
-
 from algorithms import kmeans
 from pyspark.sql.dataframe import DataFrame
-from pyspark.sql.functions import year, col, size, split, explode, regexp_replace
+from pyspark.sql.functions import year, col, size, split, explode, regexp_replace, count, sequence, lit, max as smax
 
 user_features = ['average_stars', 'sum_of_compliments', 'fans', 'review_count', 'times_of_elite',
                  'sum_of_sentiment_labels']
@@ -37,10 +35,22 @@ def epic2_task4(user_df: DataFrame):
     kmeans.kmeans_predict(user_features, classify_user_data)
 
 
-def epic2_task5(user_df: DataFrame):
-    count_zero = user_df.filter(col('review_count') == 0).count()
-    count_total = user_df.count()
-    return count_zero, count_total
+def epic2_task5(user_df: DataFrame, review_df: DataFrame) -> DataFrame:
+    sup_year = user_df.select(smax(year('yelping_since'))).collect()[0][0]
+    user_years = user_df.withColumn('join_year', year('yelping_since')) \
+        .withColumn('years', sequence(col('join_year'), lit(sup_year)))
+    user_year_count = user_years.select('user_id', explode('years').alias('year')) \
+        .groupby('year') \
+        .agg(count('user_id').alias('total_users'))
+    review_year_count = review_df.withColumn('review_year', year('date')) \
+        .dropDuplicates(['review_year', 'user_id']) \
+        .groupBy('review_year') \
+        .agg(count('user_id').alias('active_users'))
+    silent_user_ratio = user_year_count.join(review_year_count,
+                                             user_year_count['year'] == review_year_count['review_year'], 'left_outer') \
+        .withColumn('silent_user_ratio', (col('total_users') - col('active_users')) / col('total_users')) \
+        .select('year', 'silent_user_ratio')
+    return silent_user_ratio.filter(col('silent_user_ratio').isNotNull()).orderBy('year')
 
 
 def epic2_task6(user_df: DataFrame, review_df: DataFrame,
