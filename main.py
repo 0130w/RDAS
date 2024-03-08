@@ -46,7 +46,9 @@ b_df = spark.read.json(business_path)
 c_df = spark.read.json(checkin_path)
 
 epic4.epic4_task1(c_df).show()
-epic4.epic4_task2(c_df).show()
-epic4.epic4_task3(c_df, b_df).show()
-epic4.epic4_task4(c_df, b_df).show()
+epic4.epic4_task1_selectById(c_df, "AlH5V97JSAu7AL_xdibMIg").show()
+epic4.epic4_task2_selectById(c_df, "AlH5V97JSAu7AL_xdibMIg").show()
+# epic4.epic4_task2(c_df).show()
+# epic4.epic4_task3(c_df, b_df).show()
+# epic4.epic4_task4(c_df, b_df).show()
 
