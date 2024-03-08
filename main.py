@@ -1,6 +1,7 @@
 # import
 from pyspark.sql import SparkSession
 from epics import  epic1
+from epics import  epic4
 from epics import epic5
 
 # Driver
@@ -33,10 +34,19 @@ user_path = 'dataset/yelp_academic_dataset_user.json'
 # epic1.epic1_task10(b_df).show()
 # epic1.epic1_task11(b_df).show()
 
-review_df = spark.read.json(review_path)
+# review_df = spark.read.json(review_path)
+#
+# a, b, c = epic5.epic5_task2(review_df)
+# a.show()
+# b.show()
+# c.show()
 
-a, b, c = epic5.epic5_task2(review_df)
-a.show()
-b.show()
-c.show()
+# epic4 测试代码
+b_df = spark.read.json(business_path)
+c_df = spark.read.json(checkin_path)
+
+epic4.epic4_task1(c_df).show()
+epic4.epic4_task2(c_df).show()
+epic4.epic4_task3(c_df, b_df).show()
+epic4.epic4_task4(c_df, b_df).show()
 
