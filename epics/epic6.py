@@ -4,7 +4,16 @@ from utils import normalize_columns
 
 
 def epic6_task1(city: str, review_df: DataFrame, checkin_df: DataFrame, business_df: DataFrame) -> DataFrame:
-
+    """ Given a city, return the top 5 businesses based on the number of reviews, 
+        average stars, and checkins.
+    Parameters:
+    city: str - the city to search for businesses in
+    review_df: DataFrame - the DataFrame containing the reviews data
+    checkin_df: DataFrame - the DataFrame containing the checkin data
+    business_df: DataFrame - the DataFrame containing the business data
+    Returns:
+    DataFrame - a DataFrame containing the top 5 businesses based on the number of reviews, average stars, and checkins
+    """
     def calculate_sort_value(norm_reviews_build_in: float, norm_avg_stars_build_in: float, norm_checkin_build_in: float):
         return norm_reviews_build_in * 0.5 + norm_avg_stars_build_in * 0.3 + norm_checkin_build_in * 0.2
 
