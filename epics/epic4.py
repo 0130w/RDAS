@@ -67,4 +67,3 @@ def epic4_task4(checkin_df: DataFrame, business_df: DataFrame):
         .orderBy(col("checkin_count").desc()) \
         .join(business_df, checkin_df["business_id"] == business_df["business_id"], "inner") \
         .select("name", "checkin_count") \
-        .show()
