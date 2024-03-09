@@ -4,6 +4,13 @@ from typing import Tuple
 
 
 def epic5_task1(review_df: DataFrame):
+    """ Given a DataFrame containing reviews, return the average number of reviews 
+        and average stars for each day of the week.
+    Parameters:
+    review_df: DataFrame - the DataFrame containing the reviews data
+    Returns:
+    DataFrame - a DataFrame containing the average number of reviews and average stars for each day of the week
+    """
     review_df = review_df.withColumn('weekday', date_format(col('date'), 'E'))
     weekday_review_stats = review_df.groupBy('weekday') \
         .agg(
@@ -27,6 +34,13 @@ def epic5_task1(review_df: DataFrame):
 
 
 def epic5_task2(review_df: DataFrame) -> Tuple[DataFrame, DataFrame, DataFrame]:
+    """ Given a DataFrame containing reviews, return the average number of reviews 
+        and average stars for each month, season, and year.
+    Parameters:
+    review_df: DataFrame - the DataFrame containing the reviews data
+    Returns:
+    Tuple[DataFrame, DataFrame, DataFrame] - a tuple of DataFrames containing the average number of reviews and average stars for each month, season, and year
+    """
     intervals = [
         (1, 2),
         (2, 3),
