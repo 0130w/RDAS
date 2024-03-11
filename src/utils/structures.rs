@@ -1,6 +1,11 @@
 use serde::Deserialize;
 use std::collections::HashMap;
 
+pub struct Position {
+    pub latitude: f64,
+    pub longitude: f64
+}
+
 #[derive(Debug, Clone, Deserialize)]
 pub struct BusinessInfo {
     pub business_id: String,
@@ -25,8 +30,16 @@ pub enum SortConditions {
     Stars
 }
 
-pub enum FilterConditions {
-    Distance,
-    Stars,
-    Facility
+#[allow(unused)]
+enum DistanceCategories {
+    FiveKM,
+    TenKM,
+    TwentyKM
+}
+
+#[allow(unused)]
+pub struct FilterConditions {
+    distance_filter: Option<DistanceCategories>,
+    stars_filter: Option<f64>,
+    facility_filter: Option<String>
 }
