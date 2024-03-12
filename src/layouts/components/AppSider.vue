@@ -57,9 +57,9 @@
 </template>
 
 <script>
-import { isValidUrl } from '@/utils/util'
-import SiderHeader from './app-sider/SiderHeader.vue'
-import SubMenu from './app-sider/SubMenu.vue'
+import { isValidUrl } from '@/utils/util';
+import SiderHeader from './app-sider/SiderHeader.vue';
+import SubMenu from './app-sider/SubMenu.vue';
 
 export default {
   name: 'AppSider',
@@ -76,11 +76,11 @@ export default {
 
   computed: {
     routes() {
-      return this.$store.state.auth.routes
+      return this.$store.state.auth.routes;
     },
 
     isSideMenuOpened() {
-      return this.$store.state.isSideMenuOpened
+      return this.$store.state.isSideMenuOpened;
     },
   },
 
@@ -88,9 +88,9 @@ export default {
     $route: {
       handler({ name, meta }) {
         if (meta?.openKey) {
-          this.openKeys = [meta.openKey]
+          this.openKeys = [meta.openKey];
         }
-        this.selectedKeys = [name]
+        this.selectedKeys = [name];
       },
       immediate: true,
     },
@@ -98,20 +98,20 @@ export default {
 
   methods: {
     onOpenChange(openKeys) {
-      this.openKeys = openKeys
+      this.openKeys = openKeys;
     },
 
     routeTo(path) {
       if (path) {
         if (isValidUrl(path)) {
-          window.open(path, '_blank', 'noopener')
+          window.open(path, '_blank', 'noopener');
         } else {
-          this.$router.push(path)
+          this.$router.push(path);
         }
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

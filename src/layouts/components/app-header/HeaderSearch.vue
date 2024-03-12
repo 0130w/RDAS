@@ -40,21 +40,21 @@ export default {
 
   computed: {
     isSideMenuOpened() {
-      return this.$store.state.isSideMenuOpened
+      return this.$store.state.isSideMenuOpened;
     },
   },
 
   methods: {
     onOpenSearch() {
-      this.show = true
+      this.show = true;
       this.$nextTick(() => {
-        this.$refs.searchInput.focus()
-      })
+        this.$refs.searchInput.focus();
+      });
     },
 
     onCloseSearch() {
-      this.show = false
-      this.searchContent = ''
+      this.show = false;
+      this.searchContent = '';
     },
 
     onSearch() {
@@ -63,7 +63,7 @@ export default {
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

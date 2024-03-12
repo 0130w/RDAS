@@ -1,6 +1,6 @@
 <template>
   <div class="app-footer">
-    
+
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
     projectUrl: process.env.VUE_APP_PROJECT_URL,
     docUrl: process.env.VUE_APP_DOC_URL,
   }),
-}
+};
 </script>
 
 <style lang="scss" scoped>

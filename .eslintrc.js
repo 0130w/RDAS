@@ -30,7 +30,7 @@ module.exports = {
     'max-len': 0,
     'global-require': 0,
     'import/no-extraneous-dependencies': 0,
-    semi: ['error', 'never'],
+    // semi: ['error', 'never'],
     camelcase: 'off',
   },
-}
+};

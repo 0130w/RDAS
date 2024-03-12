@@ -1,7 +1,7 @@
-const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
-const IS_PROD = process.env.NODE_ENV === 'production'
+const IS_PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
@@ -54,35 +54,37 @@ module.exports = {
   chainWebpack: (config) => {
     config.resolve.alias
       .set('@img', '@/assets/images')
-      .set('@comp', '@/components')
+      .set('@comp', '@/components');
 
     config
       .plugin('html')
       .tap((args) => {
-        args[0].title = process.env.VUE_APP_PAGE_TITLE
-        return args
-      })
+        args[0].title = process.env.VUE_APP_PAGE_TITLE;
+        return args;
+      });
   },
 
   configureWebpack: (config) => {
+    config.externals = {
+      echarts: 'echarts', // 之后可以在组件中直接使用echarts
+    };
     config.plugins.push(
       new AntdDayjsWebpackPlugin({
         preset: 'antdv3',
       }),
-    )
+    );
     config.optimization = {
       splitChunks: {
         chunks: 'all',
       },
-    }
-
+    };
     if (IS_PROD) {
       config.plugins.push(
         new CompressionPlugin({
           test: /\.js$|\.html$|\.css/,
           threshold: 8192,
         }),
-      )
+      );
     }
   },
-}
+};

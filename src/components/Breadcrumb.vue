@@ -19,17 +19,17 @@ export default {
       if (this.$route.meta.breadcrumb) {
         return this.$route.meta.breadcrumb.map((item) => {
           if (typeof item === 'string') {
-            return { title: item }
+            return { title: item };
           } if (item.path) {
-            return item
+            return item;
           }
-          return {}
-        })
+          return {};
+        });
       }
-      return []
+      return [];
 
       // return this.$route.matched.map(({ meta: { title } }) => ({ title }))
     },
   },
-}
+};
 </script>

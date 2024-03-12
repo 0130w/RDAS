@@ -37,8 +37,8 @@ export default {
 
   methods: {
     setSideMenuStatus() {
-      this.$store.commit('SET_SIDE_MENU_STATUS', !this.isSideMenuOpened)
+      this.$store.commit('SET_SIDE_MENU_STATUS', !this.isSideMenuOpened);
     },
   },
-}
+};
 </script>

@@ -39,6 +39,31 @@
           键盘大写已锁定
         </p>
       </a-form-item>
+      <!-- 下拉select框 -->
+      <a-form-item>
+        <a-select
+          class="login-input"
+          size='large'
+          type='text'
+          v-model="userType"
+          @change="handleChange"
+        >
+          <template #prefix>
+            <feather
+              stroke="#aaa"
+              size="20"
+              :type=typeIcon
+            />
+          </template>
+          <a-select-option
+            v-for="item in userTypes"
+            :key="item.value"
+            :value="item.value"
+          >
+            {{ item.label }}
+          </a-select-option>
+        </a-select>
+      </a-form-item>
       <a-form-item style="margin: -15px 0 5px 0;">
         <div class="flex justify-between">
           <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">
@@ -104,7 +129,14 @@ export default {
       form: this.$form.createForm(this),
       loading: false,
       showInputTooltip: false,
-    }
+      typeIcon: 'chevrons-down',
+      userType: '0',
+      userTypes: [
+        { value: '0', label: '用户' },
+        { value: '1', label: '商户' },
+        { value: '2', label: '管理员' },
+      ],
+    };
   },
 
   mounted() {
@@ -112,40 +144,42 @@ export default {
     this.form.setFieldsValue({
       username: 'admin@magic.com',
       password: 'magic123456',
-    })
+    });
   },
 
   methods: {
     onSwitchCapture(i, e) {
-      const IS_CAPS_ON = e?.getModifierState('CapsLock') || false
-      this.showInputTooltip = i === 1 && IS_CAPS_ON
+      const IS_CAPS_ON = e?.getModifierState('CapsLock') || false;
+      this.showInputTooltip = i === 1 && IS_CAPS_ON;
     },
-
+    handleChange(value) {
+      console.log(`selected ${value}`);
+    },
     onLogin(e) {
-      e.preventDefault()
+      e.preventDefault();
 
       this.form.validateFields(async (error, values) => {
         if (!error) {
-          this.loading = true
+          this.loading = true;
           try {
-            const CAN_LOGIN = await this.$store.dispatch('user/login', values)
+            const CAN_LOGIN = await this.$store.dispatch('user/login', values);
             if (CAN_LOGIN) {
-              const { redirectPath } = this.$store.state
+              const { redirectPath } = this.$store.state;
               if (redirectPath) {
                 // 通过记录重定向路径，前往授权前想要访问的页面
-                this.$router.replace(redirectPath)
+                this.$router.replace(redirectPath);
               } else {
-                this.$router.replace('/')
+                this.$router.replace('/');
               }
             }
           } finally {
-            this.loading = false
+            this.loading = false;
           }
         }
-      })
+      });
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

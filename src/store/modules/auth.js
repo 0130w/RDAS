@@ -1,5 +1,5 @@
-import { constantRoutes, asyncRoutes } from '@/router/router'
-import { isArray, isFunction } from '@/utils/util'
+import { constantRoutes, asyncRoutes } from '@/router/router';
+import { isArray, isFunction } from '@/utils/util';
 
 /**
  * 3.检测是否能对应上相应路由的角色权限
@@ -9,18 +9,18 @@ import { isArray, isFunction } from '@/utils/util'
  * @returns {boolean} 为 true 时表示具有权限，否则无权限
  */
 function hasPermission(permissions, { meta }) {
-  const permissionKeyName = process.env.VUE_APP_ROUTE_PERMISSION_KEY_NAME || 'permission'
+  const permissionKeyName = process.env.VUE_APP_ROUTE_PERMISSION_KEY_NAME || 'permission';
 
   if (isArray(meta?.[permissionKeyName])) {
-    return meta.permission.every((el) => permissions.includes(el))
+    return meta.permission.every((el) => permissions.includes(el));
   }
 
   if (isFunction(meta?.[permissionKeyName])) {
-    return meta.permission(permissions)
+    return meta.permission(permissions);
   }
 
   // 默认是具有权限的，所以返回 true
-  return true
+  return true;
 }
 
 /**
@@ -31,28 +31,28 @@ function hasPermission(permissions, { meta }) {
  */
 export function filterAsyncRoutes(routes, permissions) {
   const res = routes.map((route) => {
-    const tmp = { ...route }
+    const tmp = { ...route };
     if (hasPermission(permissions, tmp)) {
       if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, permissions)
+        tmp.children = filterAsyncRoutes(tmp.children, permissions);
       }
-      return tmp
+      return tmp;
     }
-    return null
-  })
+    return null;
+  });
 
-  return res.filter((item) => item)
+  return res.filter((item) => item);
 }
 
 const state = {
   routes: [],
-}
+};
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
-    state.routes = constantRoutes.concat(routes)
+    state.routes = constantRoutes.concat(routes);
   },
-}
+};
 
 const actions = {
   /**
@@ -62,15 +62,15 @@ const actions = {
    * @param {Array.<string>} permissions 用户拥有的权限标识数组
    */
   generateRoutes({ commit }, permissions) {
-    const accessedRoutes = filterAsyncRoutes(asyncRoutes, permissions)
-    commit('SET_ROUTES', accessedRoutes)
-    return accessedRoutes
+    const accessedRoutes = filterAsyncRoutes(asyncRoutes, permissions);
+    commit('SET_ROUTES', accessedRoutes);
+    return accessedRoutes;
   },
-}
+};
 
 export default {
   namespaced: true,
   state,
   mutations,
   actions,
-}
+};

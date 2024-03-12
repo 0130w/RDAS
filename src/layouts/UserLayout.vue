@@ -46,17 +46,17 @@ export default {
 
   watch: {
     '$route.name': {
-      handler(name) { this.activeKey = name },
+      handler(name) { this.activeKey = name; },
       immediate: true,
     },
   },
 
   methods: {
     onTabChange(name) {
-      this.$router.push({ name })
+      this.$router.push({ name });
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

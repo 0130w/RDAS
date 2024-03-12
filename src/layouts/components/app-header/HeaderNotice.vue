@@ -111,13 +111,13 @@ export default {
 
   methods: {
     setAllNoticeRead() {
-      this.spinning = true
+      this.spinning = true;
       setTimeout(() => {
-        this.spinning = false
-      }, 1000)
+        this.spinning = false;
+      }, 1000);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

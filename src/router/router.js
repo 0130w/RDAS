@@ -1,15 +1,15 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import MainLayout from '@/layouts/MainLayout.vue'
-import UserLayout from '@/layouts/UserLayout.vue'
-import Page from '@/views/Page.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import MainLayout from '@/layouts/MainLayout.vue';
+import UserLayout from '@/layouts/UserLayout.vue';
+import Page from '@/views/Page.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 export const constantRoutes = [
   {
     path: '/',
-    redirect: '/page1',
+    redirect: '/homepage',
   },
 
   // 登录注册
@@ -44,63 +44,96 @@ export const constantRoutes = [
     component: () => import('@/views/error-pages/NotFound.vue'),
     meta: { title: '404 NotFound' },
   },
-]
+];
 
 export const asyncRoutes = [
+
   {
     path: '',
     component: MainLayout,
     single: true,
+    hidden: true,
     children: [
       {
-        path: 'page1',
-        name: 'Page1',
+        path: 'homepage',
+        name: 'HomePage',
         component: Page,
-        meta: { title: 'page-1', icon: 'file-text' },
+        meta: { title: '首页', icon: 'file-text' },
       },
     ],
   },
-
   {
     path: '',
-    meta: { title: 'Pages', icon: 'folder', openKey: 'pages' },
+    meta: {
+      title: '管理员界面', icon: 'folder', openKey: 'pages', permission: ['admin'],
+    },
     component: MainLayout,
     children: [
       {
-        path: 'page2',
-        name: 'Page2',
+        path: 'infopannel',
+        name: 'InfoPannel',
         component: Page,
-        meta: { title: 'page-2', openKey: 'pages' },
+        meta: { title: '数据面板', openKey: 'pages' },
+      },
+    ],
+  },
+  {
+    path: '',
+    meta: {
+      title: '用户界面', icon: 'folder', openKey: 'pages', permission: ['user'],
+    },
+    component: MainLayout,
+    children: [
+      {
+        path: '/user/search',
+        name: 'Search',
+        component: Page,
+        meta: { title: '搜索', openKey: 'pages' },
       },
       {
-        path: 'page3',
-        name: 'Page3',
+        path: '/user/infoChart',
+        name: 'InfoChart',
         component: Page,
-        meta: { title: 'page-3', openKey: 'pages' },
+        meta: { title: '数据图表', openKey: 'pages' },
+      },
+    ],
+  },
+  {
+    path: '',
+    meta: {
+      title: '商户界面', icon: 'folder', openKey: 'pages', permission: ['business'],
+    },
+    component: MainLayout,
+    children: [
+      {
+        path: '/business/infoChart',
+        name: 'InfoChart',
+        component: Page,
+        meta: { title: '数据图表', openKey: 'pages' },
       },
       {
-        path: 'page4',
-        name: 'Page4',
+        path: '/business/recommend',
+        name: 'Recommend',
         component: Page,
-        meta: { title: 'page-4', openKey: 'pages' },
+        meta: { title: '经营建议', openKey: 'pages' },
       },
     ],
   },
 
   { path: '*', redirect: '/not-found', hidden: true },
-]
+];
 
 const createRouter = () => new VueRouter({
   mode: process.env.VUE_APP_ROUTER_MODE || 'history',
   base: process.env.BASE_URL,
   routes: constantRoutes,
-})
+});
 
-const router = createRouter()
+const router = createRouter();
 
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // 重置路由
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // 重置路由
 }
 
-export default router
+export default router;

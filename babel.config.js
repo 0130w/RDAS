@@ -20,11 +20,11 @@ const plugins = [
     },
     '@icon-park/vue',
   ],
-]
+];
 
 // 生产环境下移除 console
 if (process.env.NODE_ENV === 'production') {
-  plugins.push(['transform-remove-console', { exclude: ['error', 'warn'] }])
+  plugins.push(['transform-remove-console', { exclude: ['error', 'warn'] }]);
 }
 
 module.exports = {
@@ -32,4 +32,4 @@ module.exports = {
     '@vue/cli-plugin-babel/preset',
   ],
   plugins,
-}
+};

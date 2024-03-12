@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import _debounce from 'lodash.debounce'
+import _debounce from 'lodash.debounce';
 
-import Breadcrumb from '@comp/Breadcrumb.vue'
-import AppHeader from './components/AppHeader.vue'
-import AppSider from './components/AppSider.vue'
-import AppFooter from './components/AppFooter.vue'
+import Breadcrumb from '@comp/Breadcrumb.vue';
+import AppHeader from './components/AppHeader.vue';
+import AppSider from './components/AppSider.vue';
+import AppFooter from './components/AppFooter.vue';
 
 export default {
   name: 'MainLayout',
@@ -68,34 +68,34 @@ export default {
 
   computed: {
     isHeaderFixed() {
-      return this.$store.state.isHeaderFixed
+      return this.$store.state.isHeaderFixed;
     },
     isSideMenuOpened() {
-      return this.$store.state.isSideMenuOpened
+      return this.$store.state.isSideMenuOpened;
     },
     menuStatusClass() {
-      return this.isSideMenuOpened ? 'menu-open' : 'menu-close'
+      return this.isSideMenuOpened ? 'menu-open' : 'menu-close';
     },
   },
 
   mounted() {
     // 观察网页宽度，设置侧边栏菜单是否展开
     window.onresize = _debounce(() => {
-      const CAN_MENU_OPEN = !!(document.body.clientWidth >= 1300)
-      this.$store.commit('SET_SIDE_MENU_STATUS', CAN_MENU_OPEN)
-    }, 400)
+      const CAN_MENU_OPEN = !!(document.body.clientWidth >= 1300);
+      this.$store.commit('SET_SIDE_MENU_STATUS', CAN_MENU_OPEN);
+    }, 400);
 
     // 观察滚动距离，调整顶部导航栏背景色
     window.onscroll = _debounce(() => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
       if (scrollTop > 10) {
-        this.$store.commit('SET_HEADER_STATUS', true)
+        this.$store.commit('SET_HEADER_STATUS', true);
       } else {
-        this.$store.commit('SET_HEADER_STATUS', false)
+        this.$store.commit('SET_HEADER_STATUS', false);
       }
-    }, 250)
+    }, 250);
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

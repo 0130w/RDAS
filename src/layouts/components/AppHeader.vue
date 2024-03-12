@@ -61,10 +61,10 @@
 </template>
 
 <script>
-import screenfull from 'screenfull'
-import { isValidUrl } from '@/utils/util'
-import HeaderSearch from './app-header/HeaderSearch.vue'
-import HeaderNotice from './app-header/HeaderNotice.vue'
+import screenfull from 'screenfull';
+import { isValidUrl } from '@/utils/util';
+import HeaderSearch from './app-header/HeaderSearch.vue';
+import HeaderNotice from './app-header/HeaderNotice.vue';
 
 export default {
   name: 'AppHeader',
@@ -84,45 +84,45 @@ export default {
 
   computed: {
     info() {
-      return this.$store.state.user.info
+      return this.$store.state.user.info;
     },
   },
 
   mounted() {
     if (screenfull.isEnabled) {
-      screenfull.on('change', () => { this.isFullScreen = screenfull.isFullscreen })
+      screenfull.on('change', () => { this.isFullScreen = screenfull.isFullscreen; });
     }
   },
 
   methods: {
     async logOut() {
-      const CAN_LOGOUT = await this.$store.dispatch('user/logout')
+      const CAN_LOGOUT = await this.$store.dispatch('user/logout');
       if (CAN_LOGOUT) {
-        this.$router.replace({ name: 'Login' })
+        this.$router.replace({ name: 'Login' });
       }
     },
 
     onClickShortcut(name) {
-      this.$router.push({ name })
+      this.$router.push({ name });
     },
 
     onClickMenuItem(name, click) {
       if (click) {
-        this[click]()
+        this[click]();
       } else if (isValidUrl(name)) {
-        window.open(name, '_blank', 'noopener')
+        window.open(name, '_blank', 'noopener');
       } else {
-        this.$router.push({ name })
+        this.$router.push({ name });
       }
     },
 
     onScreenfull() {
       if (screenfull.isEnabled) {
-        screenfull.toggle()
+        screenfull.toggle();
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
