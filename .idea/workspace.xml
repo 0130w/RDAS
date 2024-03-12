@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c68b7f18-6950-4504-8cfd-e9190421d10a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PDAS" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/epics/epic1.py" beforeDir="false" afterPath="$PROJECT_DIR$/epics/epic1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/epics/epic3.py" beforeDir="false" afterPath="$PROJECT_DIR$/epics/epic3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/epics/epic7.py" beforeDir="false" afterPath="$PROJECT_DIR$/epics/epic7.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +29,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -46,6 +46,7 @@
   "keyToString": {
     "Python.epic2.executor": "Run",
     "Python.epic7.executor": "Run",
+    "Python.epic8.executor": "Run",
     "Python.geohash.executor": "Run",
     "Python.kmeans.executor": "Run",
     "Python.main.executor": "Run",
@@ -68,6 +69,7 @@
       <recent name="C:\Users\zzq\Desktop\pythonProject\Epic2" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zzq\Desktop\pythonProject\PDAS-BigDataend\utils" />
       <recent name="C:\Users\zzq\Desktop\pythonProject\dataset" />
       <recent name="C:\Users\zzq\Desktop\pythonProject" />
     </key>
@@ -125,7 +127,8 @@
       <workItem from="1710174284059" duration="114000" />
       <workItem from="1710174412000" duration="17000" />
       <workItem from="1710210217385" duration="838000" />
-      <workItem from="1710211063855" duration="6541000" />
+      <workItem from="1710211063855" duration="19363000" />
+      <workItem from="1710245476990" duration="10327000" />
     </task>
     <servers />
   </component>
@@ -133,12 +136,13 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PDAS_BigDataend$epic8.coverage" NAME="epic8 Coverage Results" MODIFIED="1710249773426" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/epics" />
     <SUITE FILE_PATH="coverage/PDAS_BigDataend$epic2.coverage" NAME="epic2 Coverage Results" MODIFIED="1709862896759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/epics" />
     <SUITE FILE_PATH="coverage/PDAS_BigDataend$epic7.coverage" NAME="epic7 Coverage Results" MODIFIED="1710218422132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/epics" />
     <SUITE FILE_PATH="coverage/PDAS$main.coverage" NAME="main Coverage Results" MODIFIED="1709886371841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PDAS_BigDataend$kmeans.coverage" NAME="kmeans Coverage Results" MODIFIED="1709802281359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithms" />
     <SUITE FILE_PATH="coverage/PDAS_BigDataend$geohash.coverage" NAME="geohash Coverage Results" MODIFIED="1710213026060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/algorithms" />
     <SUITE FILE_PATH="coverage/pythonProject$main.coverage" NAME="main Coverage Results" MODIFIED="1709794767721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PDAS_BigDataend$main.coverage" NAME="main Coverage Results" MODIFIED="1710218513761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PDAS_BigDataend$main.coverage" NAME="main Coverage Results" MODIFIED="1710259818694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
