@@ -18,6 +18,10 @@ from wordcloud import WordCloud
 import re
 
 def epic3_task1(review_df: DataFrame):
+    """
+    Parameters:
+        review_df: DataFrame from review.json
+    Returns: None(Displays a bar chart of the number of reviews per year)"""
     review_df = review_df.withColumn('year',year('date')).drop('date')
     comments_count_by_year = review_df.groupBy("year").count()
     comments_count_by_year = comments_count_by_year.orderBy("year")
@@ -34,6 +38,10 @@ def epic3_task1(review_df: DataFrame):
     plt.show()
 
 def epic3_task2(review_df: DataFrame):
+    """
+    Parameters:
+        review_df: DataFrame from review.json
+    Returns: None(Displays a bar chart of the number of cool, funny, and useful comments per year)"""
     review_df = review_df.withColumn('year',year('date')).drop('date')
     cool_comments_count_by_year = review_df.filter(review_df.cool == 1).groupBy("year").count().orderBy("year")
     funny_comments_count_by_year = review_df.filter(review_df.funny == 1).groupBy("year").count().orderBy("year")
@@ -74,6 +82,10 @@ def epic3_task2(review_df: DataFrame):
     plt.show()
 
 def epic3_task3(review_df: DataFrame):
+    """
+    Parameters:
+        review_df: DataFrame from review.json
+    Returns: DataFrame(Displays the top 20 users with the most comments)"""
     user_df = review_df.groupBy("user_id").count()
     user_comments_rank = user_df.orderBy(col("count").desc())
     user_comments_rank.show(20)
@@ -81,6 +93,10 @@ def epic3_task3(review_df: DataFrame):
 
 
 def epic3_task4(review_df: DataFrame):
+    """
+    Parameters:
+        review_df: DataFrame from review.json
+    Returns: None(Displays a word cloud of the most frequently used words in the comments)"""
     def get_word_pos(tag):
         if tag.startswith('J'):
             return wordnet.ADJ
@@ -97,7 +113,7 @@ def epic3_task4(review_df: DataFrame):
         nopunct = regex.sub(" ", text)
         return nopunct
     def makeImage(text):
-        alice_mask = np.array(Image.open("alice_color.png"))
+        alice_mask = np.array(Image.open("/home/ariselr/1.png"))
         wc = WordCloud(background_color="white", max_words=1000, mask=alice_mask)
         # generate word cloud
         wc.generate_from_frequencies(text)
@@ -133,6 +149,10 @@ def epic3_task4(review_df: DataFrame):
     makeImage(word_dict)
     
 def epic3_task5(review_df: DataFrame):
+    """
+    Parameters:
+        review_df: DataFrame from review.json
+    Returns: DataFrame(The top 20 most frequently used words in the comments)"""
     def get_word_pos(tag):
         if tag.startswith('J'):
             return wordnet.ADJ
@@ -156,7 +176,7 @@ def epic3_task5(review_df: DataFrame):
     tokenized_df = tokenizer.transform(df_clean)
     remover = StopWordsRemover(inputCol="tokenized", outputCol="remove_stop_words")
     remove_stop_words_df = remover.transform(tokenized_df.drop('remove_punctuation'))
-    remove_stop_words_df.drop('tokenized').show(5,truncate=False)
+    remove_stop_words_df.drop('tokenized')
     word_dict = {}
     remove_stop_words_list_modified = []
     val = remove_stop_words_df.select('remove_stop_words').collect()
@@ -178,6 +198,10 @@ def epic3_task5(review_df: DataFrame):
 
 
 def epic3_task6(review_df: DataFrame):
+    """
+    Parameters:
+        review_df: DataFrame from review.json
+    Returns: None(Displays a network graph of the top 50 most frequently used words in the comments)"""
     def get_word_pos(tag):
         if tag.startswith('J'):
             return wordnet.ADJ
@@ -273,5 +297,5 @@ if __name__ == '__main__':
     tip_path = 'dataset/yelp_academic_dataset_tip.json'
     user_path = 'dataset/yelp_academic_dataset_user.json'
 
-    df = spark.read.json(review_path).limit(5000)
+    df = spark.read.json(review_path).limit(500)
     epic3_task5(df)
