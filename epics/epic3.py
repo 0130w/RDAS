@@ -1,9 +1,7 @@
 from pyspark.sql.dataframe import DataFrame
 import nltk
 import pandas as pd
-from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from nltk import MWETokenizer
 from nltk.corpus import wordnet
 from pyspark.ml.feature import RegexTokenizer
 from pyspark.ml.feature import StopWordsRemover
@@ -16,6 +14,7 @@ import multidict as multidict
 from PIL import Image
 from wordcloud import WordCloud
 import re
+from utils import cal_freq
 
 def epic3_task1(review_df: DataFrame):
     """
@@ -97,55 +96,14 @@ def epic3_task4(review_df: DataFrame):
     Parameters:
         review_df: DataFrame from review.json
     Returns: None(Displays a word cloud of the most frequently used words in the comments)"""
-    def get_word_pos(tag):
-        if tag.startswith('J'):
-            return wordnet.ADJ
-        elif tag.startswith('V'):
-            return wordnet.VERB
-        elif tag.startswith('N'):
-            return wordnet.NOUN
-        elif tag.startswith('R'):
-            return wordnet.ADV
-        else:
-            return None
-    def remove_punct(text):
-        regex = re.compile('[' + re.escape(string.punctuation) + '0-9\\r\\t\\n]')
-        nopunct = regex.sub(" ", text)
-        return nopunct
+
     def makeImage(text):
         alice_mask = np.array(Image.open("/home/ariselr/1.png"))
         wc = WordCloud(background_color="white", max_words=1000, mask=alice_mask)
         # generate word cloud
         wc.generate_from_frequencies(text)
-
-        plt.imshow(wc, interpolation="bilinear")
-        plt.axis("off")
-        plt.show()
-
-    wnl = WordNetLemmatizer()
-    punct_remover = udf(lambda x: remove_punct(x))
-    #去标点符号分词
-    df_clean = review_df.select('text').withColumn('remove_punctuation',punct_remover('text')).drop('text') #可以添加除了text的其他字段
-    tokenizer = RegexTokenizer(inputCol="remove_punctuation", outputCol="tokenized",pattern='\\s+')
-    tokenized_df = tokenizer.transform(df_clean)
-    #去停用词
-    remover = StopWordsRemover(inputCol="tokenized", outputCol="remove_stop_words")
-    remove_stop_words_df = remover.transform(tokenized_df.drop('remove_punctuation'))
-    remove_stop_words_df.drop('tokenized').show(5,truncate=False)
-    word_dict = {}
-    remove_stop_words_list_modified = []
-    val = remove_stop_words_df.select('remove_stop_words').collect()
-    remove_stop_words_list = [ ele.__getattr__('remove_stop_words') for ele in val]
-    for t in remove_stop_words_list:
-        refiltered =nltk.pos_tag(t)
-        lemmas_sent = []
-        for wordtag in refiltered:
-            wordnet_pos = get_word_pos(wordtag[1]) or wordnet.NOUN
-            word = wnl.lemmatize(wordtag[0], pos=wordnet_pos)
-            lemmas_sent.append(word) 
-            word_dict[word] = word_dict.get(word,0)+1
-        remove_stop_words_list_modified.append(lemmas_sent)
-
+    
+    word_dict, _ = cal_freq.get_word_dict(review_df)
     makeImage(word_dict)
     
 def epic3_task5(review_df: DataFrame):
@@ -153,44 +111,8 @@ def epic3_task5(review_df: DataFrame):
     Parameters:
         review_df: DataFrame from review.json
     Returns: DataFrame(The top 20 most frequently used words in the comments)"""
-    def get_word_pos(tag):
-        if tag.startswith('J'):
-            return wordnet.ADJ
-        elif tag.startswith('V'):
-            return wordnet.VERB
-        elif tag.startswith('N'):
-            return wordnet.NOUN
-        elif tag.startswith('R'):
-            return wordnet.ADV
-        else:
-            return None
-    def remove_punct(text):
-        regex = re.compile('[' + re.escape(string.punctuation) + '0-9\\r\\t\\n]')
-        nopunct = regex.sub(" ", text)
-        return nopunct
-    
-    wnl = WordNetLemmatizer()
-    punct_remover = udf(lambda x: remove_punct(x))
-    df_clean = review_df.select('text').withColumn('remove_punctuation',punct_remover('text')).drop('text') #可以添加除了text的其他字段
-    tokenizer = RegexTokenizer(inputCol="remove_punctuation", outputCol="tokenized",pattern='\\s+')
-    tokenized_df = tokenizer.transform(df_clean)
-    remover = StopWordsRemover(inputCol="tokenized", outputCol="remove_stop_words")
-    remove_stop_words_df = remover.transform(tokenized_df.drop('remove_punctuation'))
-    remove_stop_words_df.drop('tokenized')
-    word_dict = {}
-    remove_stop_words_list_modified = []
-    val = remove_stop_words_df.select('remove_stop_words').collect()
-    remove_stop_words_list = [ ele.__getattr__('remove_stop_words') for ele in val]
-    for t in remove_stop_words_list:
-        refiltered =nltk.pos_tag(t)
-        lemmas_sent = []
-        for wordtag in refiltered:
-            wordnet_pos = get_word_pos(wordtag[1]) or wordnet.NOUN
-            word = wnl.lemmatize(wordtag[0], pos=wordnet_pos)
-            lemmas_sent.append(word) 
-            word_dict[word] = word_dict.get(word,0)+1
-        remove_stop_words_list_modified.append(lemmas_sent)
 
+    word_dict, _ = cal_freq.get_word_dict(review_df)
     wordfreq = pd.DataFrame({'word':word_dict.keys(),'freq':word_dict.values()})
     wordfreq = wordfreq.sort_values(by='freq', ascending=False)
         
@@ -202,44 +124,8 @@ def epic3_task6(review_df: DataFrame):
     Parameters:
         review_df: DataFrame from review.json
     Returns: None(Displays a network graph of the top 50 most frequently used words in the comments)"""
-    def get_word_pos(tag):
-        if tag.startswith('J'):
-            return wordnet.ADJ
-        elif tag.startswith('V'):
-            return wordnet.VERB
-        elif tag.startswith('N'):
-            return wordnet.NOUN
-        elif tag.startswith('R'):
-            return wordnet.ADV
-        else:
-            return None
-    def remove_punct(text):
-        regex = re.compile('[' + re.escape(string.punctuation) + '0-9\\r\\t\\n]')
-        nopunct = regex.sub(" ", text)
-        return nopunct
-    
-    wnl = WordNetLemmatizer()
-    punct_remover = udf(lambda x: remove_punct(x))
-    df_clean = review_df.select('text').withColumn('remove_punctuation',punct_remover('text')).drop('text') #可以添加除了text的其他字段
-    tokenizer = RegexTokenizer(inputCol="remove_punctuation", outputCol="tokenized",pattern='\\s+')
-    tokenized_df = tokenizer.transform(df_clean)
-    remover = StopWordsRemover(inputCol="tokenized", outputCol="remove_stop_words")
-    remove_stop_words_df = remover.transform(tokenized_df.drop('remove_punctuation'))
-    remove_stop_words_df.drop('tokenized').show(5,truncate=False)
-    word_dict = {}
-    remove_stop_words_list_modified = []
-    val = remove_stop_words_df.select('remove_stop_words').collect()
-    remove_stop_words_list = [ ele.__getattr__('remove_stop_words') for ele in val]
-
-    for t in remove_stop_words_list:
-        refiltered =nltk.pos_tag(t)
-        lemmas_sent = []
-        for wordtag in refiltered:
-            wordnet_pos = get_word_pos(wordtag[1]) or wordnet.NOUN
-            word = wnl.lemmatize(wordtag[0], pos=wordnet_pos)
-            lemmas_sent.append(word) 
-            word_dict[word] = word_dict.get(word,0)+1
-        remove_stop_words_list_modified.append(lemmas_sent)
+ 
+    word_dict, remove_stop_words_list_modified = cal_freq.get_word_dict(review_df)
 
     wordfreq = pd.DataFrame({'word':word_dict.keys(),'freq':word_dict.values()})
     wordfreq = wordfreq.sort_values(by='freq', ascending=False)
