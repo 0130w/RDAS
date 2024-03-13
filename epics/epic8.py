@@ -1,9 +1,10 @@
-from pyspark.sql import SparkSession
-from pyspark.sql.dataframe import DataFrame
-from pyspark.sql.functions import struct, col, collect_list, udf, lit, array, avg
 from typing import Tuple
-from pyspark.sql.types import DoubleType, StringType
-from utils import extractor, pre_process, sentiments, randn
+
+from pyspark.sql import SparkSession, DataFrame
+from pyspark.sql.dataframe import DataFrame
+from pyspark.sql.functions import col, udf, lit, array, avg
+from pyspark.sql.types import DoubleType, StringType, ArrayType
+from utils import extractor, pre_process, sentiments, randn, prompt_generate, request
 from algorithms import similarity
 
 
@@ -109,3 +110,32 @@ def epic8_task1(spark: SparkSession, user_id: str, tip_df: DataFrame,
     final_df = (randn.add_random_noise(combined_grade_score, 'grade_score', 0.001, 0.001)
                 .orderBy('grade_score', ascending=False))
     return final_df
+
+
+def epic8_task2(business_id: str, review_df: DataFrame, tip_df: DataFrame) -> Tuple[DataFrame, str]:
+    """ Give business advice by analyzing the review and tip
+    Parameters:
+        business_id (str): id of the input business
+        review_df (DataFrame): dataframe read from review json
+        tip_df (DataFrame): dataframe read from tip json
+    """
+    # Select business_id and text
+    review_df = review_df.select('business_id', 'text').filter(col('business_id') == business_id).drop('business_id')
+    tip_df = tip_df.select('business_id', 'text').filter(col('business_id') == business_id).drop('business_id')
+    extract_keywords_udf = udf(sentiments.extract_keywords, ArrayType(StringType()))
+
+    def sentiment_analysis(df: DataFrame) -> DataFrame:
+        df = df.withColumn('sentiment', sentiments.analyze_sentiment(col('text')))
+        df = df.withColumn('keywords', extract_keywords_udf(col('text')))
+        return df
+    # Do sentiment analysis with review and tip text
+    review_df = sentiment_analysis(review_df)
+    tip_df = sentiment_analysis(tip_df)
+
+    union_df = review_df.union(tip_df)
+
+    prompt = prompt_generate.generate_comprehensive_prompt(union_df)
+
+    response = request.request_llm('gpt-3.5-turbo', prompt)
+
+    return union_df, response
