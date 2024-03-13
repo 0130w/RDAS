@@ -73,7 +73,7 @@ export default {
   data: () => ({
     menuItems: [
       {
-        label: '官方文档', name: 'https://docs.leoku.top', icon: 'book-open',
+        label: '个人信息', name: 'Info', icon: 'book-open', click: 'getUserInfo',
       },
       {
         label: '退出登录', name: 'Login', icon: 'log-out', click: 'logOut',
@@ -101,7 +101,9 @@ export default {
         this.$router.replace({ name: 'Login' });
       }
     },
-
+    getUserInfo() {
+      console.log();
+    },
     onClickShortcut(name) {
       this.$router.push({ name });
     },

@@ -39,31 +39,6 @@
           键盘大写已锁定
         </p>
       </a-form-item>
-      <!-- 下拉select框 -->
-      <a-form-item>
-        <a-select
-          class="login-input"
-          size='large'
-          type='text'
-          v-model="userType"
-          @change="handleChange"
-        >
-          <template #prefix>
-            <feather
-              stroke="#aaa"
-              size="20"
-              :type=typeIcon
-            />
-          </template>
-          <a-select-option
-            v-for="item in userTypes"
-            :key="item.value"
-            :value="item.value"
-          >
-            {{ item.label }}
-          </a-select-option>
-        </a-select>
-      </a-form-item>
       <a-form-item style="margin: -15px 0 5px 0;">
         <div class="flex justify-between">
           <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">
@@ -129,13 +104,6 @@ export default {
       form: this.$form.createForm(this),
       loading: false,
       showInputTooltip: false,
-      typeIcon: 'chevrons-down',
-      userType: '0',
-      userTypes: [
-        { value: '0', label: '用户' },
-        { value: '1', label: '商户' },
-        { value: '2', label: '管理员' },
-      ],
     };
   },
 

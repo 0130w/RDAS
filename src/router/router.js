@@ -72,7 +72,7 @@ export const asyncRoutes = [
       {
         path: 'infopannel',
         name: 'InfoPannel',
-        component: Page,
+        component: () => import('@/views/admin/Analytics.vue'),
         meta: { title: '数据面板', openKey: 'pages' },
       },
     ],

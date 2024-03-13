@@ -65,9 +65,9 @@ module.exports = {
   },
 
   configureWebpack: (config) => {
-    config.externals = {
-      echarts: 'echarts', // 之后可以在组件中直接使用echarts
-    };
+    // config.externals = {
+    //   echarts: 'echarts', // 之后可以在组件中直接使用echarts
+    // };
     config.plugins.push(
       new AntdDayjsWebpackPlugin({
         preset: 'antdv3',

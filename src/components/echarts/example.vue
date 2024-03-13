@@ -1,14 +1,13 @@
 <template>
-  <div class="echarts-box">
-    <!-- 一定要设置宽高,且宽高必须是行内样式，单位必须是px -->
-    <div
-      id="myChart"
-      :style="{ width: '800px', height: '600px' }"
-    ></div>
-  </div>
+  <!-- 一定要设置宽高,且宽高必须是行内样式，单位必须是px -->
+  <div
+    id="myChart"
+    :style="{ width: '800px', height: '600px' }"
+  ></div>
 </template>
 
 <script>
+
 export default {
   // 钩子函数
   mounted() {
@@ -20,7 +19,6 @@ export default {
       const myChart = this.$echarts.init(document.getElementById('myChart'));
       // 绘制图表
       const option = {
-        // echarts官方示例代码
         title: {
           text: 'Stacked Area Chart',
         },
@@ -116,9 +114,8 @@ export default {
           },
         ],
       };
-
       // 设置option
-      option && myChart.setOption(option);
+      myChart.setOption(option);
     },
   },
 };

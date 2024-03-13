@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import errorHandler from '@/utils/error-handler';
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 import App from './App.vue';
 import router from './router/router';
 import store from './store/store';

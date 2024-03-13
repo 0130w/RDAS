@@ -69,16 +69,7 @@ export default {
         id: '1', title: '订单已创建', time: '2 分钟前', type: 'primary',
       },
       {
-        id: '2', title: '系统升级程序已准备就绪', time: '30 分钟前', type: 'success',
-      },
-      {
         id: '3', title: '今日剩余 3 项待办事项', time: '1 小时前', type: 'warning',
-      },
-      {
-        id: '4', title: '系统存在 2 个安全隐患', time: '5 小时前', type: 'danger',
-      },
-      {
-        id: '5', title: '6 个文件已完成下载', time: '2020-08-01', type: 'info',
       },
     ],
     noticeTypes: {
