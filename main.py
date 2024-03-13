@@ -1,6 +1,5 @@
 # import
 from pyspark.sql import SparkSession
-from epics import epic8
 
 # Driver
 spark = SparkSession \

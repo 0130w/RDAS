@@ -36,4 +36,3 @@ def pre_process_tip(tip_df: DataFrame) -> DataFrame:
     tip_df = tip_df.withColumn('date', col('date').cast('date'))
     return tip_df
 
-
