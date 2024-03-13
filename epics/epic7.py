@@ -5,7 +5,16 @@ from typing import Tuple
 from algorithms import geohash, haversine
 
 
-def epic7_task1(location: Tuple[float, float], business_df: DataFrame, precision: int = 6) -> DataFrame:
+def epic7_task1(location: Tuple[float, float], business_df: DataFrame,
+                precision: int = 6) -> DataFrame:
+    """ List nearby businesses according to the location of user
+    Parameters:
+        location (Tuple[float, float]) : location of user
+        business_df (DataFrame) : business data
+        precision (int, optional) : precision of the geohash
+    Returns:
+        DataFrame: sorted nearby businesses
+    """
     latitude, longitude = location[0], location[1]
     geohash_udf = udf(geohash.geohash_udf, StringType())
     business_df = business_df.withColumn("geohash", geohash_udf(col("latitude"), col("longitude")))
@@ -17,4 +26,6 @@ def epic7_task1(location: Tuple[float, float], business_df: DataFrame, precision
 
 
 def epic7_task2():
+    """ This task is not needed to be done in big data end """
     pass
+
