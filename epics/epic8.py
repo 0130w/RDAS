@@ -56,10 +56,18 @@ def calculate_user_business_similarity(spark: SparkSession, business_df: DataFra
     return similarity_df
 
 
-def epic8_task1(spark, user_id: str, tip_df: DataFrame, review_df: DataFrame, business_df: DataFrame) \
+def epic8_task1(spark: SparkSession, user_id: str, tip_df: DataFrame,
+                review_df: DataFrame, business_df: DataFrame) \
         -> DataFrame:
-    """ Recommend businesses based on user's
-
+    """ Recommend businesses based on user's consumption history
+    Parameters:
+        spark (SparkSession)
+        user_id (str): the id of the user
+        tip_df (DataFrame): the dataframe read from tip json
+        review_df (DataFrame): the dataframe read from review json
+        business_df (DataFrame): the dataframe read from business json
+    Returns:
+        DataFrame: the dataframe with business_id and grade_scope sorted by grade_scope
     """
     # Pre-process
     review_df = pre_process.pre_process_review(review_df)
