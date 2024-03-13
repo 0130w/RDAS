@@ -56,3 +56,21 @@ def epic7_task3(sort_conditions: SortConditions, city: str, location: Tuple[floa
     elif sort_conditions == SortConditions.Distance:
         return epic7_task1(location, business_df)
     return business_df.orderBy('stars', ascending=False)
+
+
+def epic7_task4(city: str, location: Tuple[float, float],
+                business_df: DataFrame, distance: float = 30, stars: int = 3.5):
+    """ Filter businesses based on city, distance and stars
+    Parameters:
+        city (str): city name
+        location (Tuple[float, float]): location of the user
+        business_df (DataFrame): dataframe read from business json
+        distance (float): businesses with distance greater than this value will be filtered
+        stars (int): businesses with stars lower than this value will be filtered
+    Returns:
+        DataFrame: businesses meet the requirements
+    """
+    business_df = business_df.filter(col('city') == city).filter(col('stars') > stars)
+    return (haversine.haversine_distance(business_df, 'latitude', 'longitude',
+                                         location[0], location[1])
+            .filter(col('distance') < distance).orderBy('stars', ascending=False))
