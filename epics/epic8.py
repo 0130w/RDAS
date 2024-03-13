@@ -1,9 +1,10 @@
 from typing import Tuple
 
-from pyspark.sql import SparkSession, DataFrame
+from pyspark.ml.feature import Tokenizer, IDF, HashingTF
+from pyspark.sql import SparkSession
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.functions import col, udf, lit, array, avg
-from pyspark.sql.types import DoubleType, StringType, ArrayType
+from pyspark.sql.types import DoubleType, StringType, ArrayType, FloatType
 from utils import extractor, pre_process, sentiments, randn, prompt_generate, request
 from algorithms import similarity
 
@@ -118,6 +119,9 @@ def epic8_task2(business_id: str, review_df: DataFrame, tip_df: DataFrame) -> Tu
         business_id (str): id of the input business
         review_df (DataFrame): dataframe read from review json
         tip_df (DataFrame): dataframe read from tip json
+    Returns:
+        DataFrame: dataframe contains text, sentiments and keywords
+        str: contains advice given based on the text, sentiments and keywords
     """
     # Select business_id and text
     review_df = review_df.select('business_id', 'text').filter(col('business_id') == business_id).drop('business_id')
@@ -139,3 +143,51 @@ def epic8_task2(business_id: str, review_df: DataFrame, tip_df: DataFrame) -> Tu
     response = request.request_llm('gpt-3.5-turbo', prompt)
 
     return union_df, response
+
+
+def epic8_task3(user_id: str, review_df: DataFrame,
+                tip_df: DataFrame, user_df: DataFrame, n_recommendations=6):
+
+    user_reviews = review_df.filter(review_df['user_id'] == user_id).select('text')
+    user_tips = tip_df.filter(tip_df['user_id'] == user_id).select('text')
+    user_data = user_reviews.union(user_tips).withColumnRenamed('text', 'user_text')
+
+    # randomly get 20 users from user_df
+    other_users = user_df.filter(user_df['user_id'] != user_id).sample(False, 0.1).limit(20)
+    other_user_ids = [row['user_id'] for row in other_users.collect()]
+
+    # tokenize the texts
+    tokenizer = Tokenizer(inputCol="user_text", outputCol="words")
+    user_words = tokenizer.transform(user_data)
+
+    # calculate tf-idf
+    hashing_tf = HashingTF(inputCol="words", outputCol="rawFeatures")
+    featured_data = hashing_tf.transform(user_words)
+    idf = IDF(inputCol="rawFeatures", outputCol="features")
+    idf_model = idf.fit(featured_data)
+    user_features = idf_model.transform(featured_data)
+
+    # store similarity and user_id
+    similarities = []
+
+    for other_user in other_user_ids:
+        other_reviews = review_df.filter(review_df['user_id'] == other_user).select('text')
+        other_tips = tip_df.filter(tip_df['user_id'] == other_user).select('text')
+        other_data = other_reviews.union(other_tips).withColumnRenamed('text', 'user_text')
+        other_words = tokenizer.transform(other_data)
+        other_featured_data = hashing_tf.transform(other_words)
+        other_features = idf_model.transform(other_featured_data)
+
+        other_features = other_features.withColumnRenamed('features', 'other_features')
+
+        # get cosine_similarity
+        sim = user_features.crossJoin(other_features) \
+            .select(similarity.cosine_similarity_udf("features", "other_features").alias("similarity")) \
+            .collect()[0]["similarity"]
+        similarities.append((other_user, sim))
+
+    similarities.sort(key=lambda x: x[1], reverse=True)
+    recommended_friends = [user[0] for user in similarities[:n_recommendations]]
+
+    # TODO! convert list to dataframe
+    return recommended_friends

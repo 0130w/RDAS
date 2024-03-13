@@ -1,3 +1,7 @@
+from pyspark.sql.functions import udf
+from pyspark.sql.types import FloatType
+
+
 def jaccard_similarity(list1, list2) -> float:
     """ Compute the jaccard similarity between two lists
     Parameters:
@@ -13,3 +17,8 @@ def jaccard_similarity(list1, list2) -> float:
     intersection = len(set1.intersection(set2))
     union = len(set1.union(set2))
     return intersection / union if union != 0 else 0.0
+
+
+@udf(FloatType())
+def cosine_similarity_udf(x, y):
+    return float(x.dot(y) / (x.norm(2) * y.norm(2)))
