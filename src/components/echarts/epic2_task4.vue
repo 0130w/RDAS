@@ -1,10 +1,8 @@
-// 传入两类用户 一类预测为0 另一类预测为1
-// 可以改成饼图
 <template>
   <!-- 一定要设置宽高,且宽高必须是行内样式，单位必须是px -->
   <div
     id="myChart"
-    :style="{ width: '700px', height: '400px' }"
+    :style="{ width: '1100px', height: '450px' }"
   ></div>
 </template>
 

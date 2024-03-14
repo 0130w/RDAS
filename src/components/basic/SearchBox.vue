@@ -19,15 +19,15 @@
         </a-select-option>
       </a-select>
       <button
-        @click="handleSearch"
+        @click="handleSearch(searchTerm)"
         class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
       >
         Search
       </button>
     </div>
-    <div class="bg-gray-100 px-6 pb-4 flex justify-between items-center">
+    <div class="bg-gray-100 px-6 pb-4 flex justify-between items-center ">
       <!-- 左侧条件选择 -->
-      <Nav>
+      <Nav class="mr-64">
         <NavItem
           v-for="choice in choices"
           :key="choice.value"
@@ -82,13 +82,13 @@
     </div>
     <div
       class="h-80 overflow-auto"
-      style="max-height: 400px; overflow-y: auto;"
+      style="height: 400px; overflow-y: auto;"
     >
       <List>
         <ListItem
-          v-for="movie in movies"
-          :key="movie.id"
-          :movie="movie"
+          v-for="business in businesss"
+          :key="business.id"
+          :business="business"
         />
       </List>
     </div>
@@ -123,57 +123,8 @@ export default {
         { value: 'option3', label: '选项3' },
         { value: 'option4', label: '选项4' },
       ],
-      movies: [
-        {
-          id: 1,
-          title: 'The Shawshank Redemption',
-          rating: 2.6,
-          starRating: 2.6,
-          year: 1994,
-          genre: 'Drama',
-          runtime: '2h 22min',
-          cast: 'Tim Robbins, Morgan Freeman, Bob Gunton',
-        },
-        {
-          id: 2,
-          title: 'The Shawshank Redemption',
-          rating: 2.6,
-          starRating: 2.6,
-          year: 1994,
-          genre: 'Drama',
-          runtime: '2h 22min',
-          cast: 'Tim Robbins, Morgan Freeman, Bob Gunton',
-        },
-        {
-          id: 3,
-          title: 'The Shawshank Redemption',
-          rating: 2.6,
-          starRating: 2.6,
-          year: 1994,
-          genre: 'Drama',
-          runtime: '2h 22min',
-          cast: 'Tim Robbins, Morgan Freeman, Bob Gunton',
-        },
-        {
-          id: 4,
-          title: 'The Shawshank Redemption',
-          rating: 2.6,
-          starRating: 2.6,
-          year: 1994,
-          genre: 'Drama',
-          runtime: '2h 22min',
-          cast: 'Tim Robbins, Morgan Freeman, Bob Gunton',
-        },
-        {
-          id: 5,
-          title: 'The Shawshank Redemption',
-          rating: 2.6,
-          starRating: 2.6,
-          year: 1994,
-          genre: 'Drama',
-          runtime: '2h 22min',
-          cast: 'Tim Robbins, Morgan Freeman, Bob Gunton',
-        },
+      businesses: [
+
       ],
     };
   },
@@ -184,9 +135,29 @@ export default {
     handleSelect(value) {
       console.log(`Selected: ${value}`);
     },
-    handleSearch() {
-      console.log(`Searching for: ${this.searchTerm}`);
-      // 执行搜索操作
+    async handleSearch(values) {
+      console.log('searching for:', values);
+      if (values) { // 假设你要检查的是 values 是否有效
+        this.loading = true;
+        try {
+          // 假设 dispatch 返回一个对象，包含 CAN_LOGIN 和 business 数据
+          const response = await this.$store.dispatch('user/searchForBusiness', values);
+          if (response) {
+            this.businesses = response.businesses; // 确保这里的变量名与你期望的一致
+          } else {
+            this.$message.error('搜索失败');
+          }
+        } catch (error) {
+          // 如果在尝试中捕获到错误，可以在这里处理
+          console.error(error);
+          this.$message.error('搜索过程中出现错误');
+        } finally {
+          this.loading = false;
+        }
+      } else {
+        // 处理 values 无效的情况
+        this.$message.error('提供的搜索值无效');
+      }
     },
     toggleSelectAll() {
       if (this.selectAll) {

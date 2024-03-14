@@ -1,7 +1,7 @@
 <template>
-  <div class="rounded overflow-hidden shadow-lg bg-white">
+  <div class="rounded overflow-hidden shadow-lg bg-white p-2">
     <img
-      class="w-full h-64 object-cover"
+      class="w-full h-64 object-cover p-4"
       :src="business.image"
       alt="商户图片"
     >

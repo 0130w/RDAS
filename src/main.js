@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import errorHandler from '@/utils/error-handler';
 import * as echarts from 'echarts';
-import VueResource from 'vue-resource';
 import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
@@ -16,7 +15,6 @@ import './directives'; // 自定义指令
 Vue.prototype.$echarts = echarts;
 Vue.config.errorHandler = errorHandler;
 Vue.config.productionTip = false;
-Vue.use(VueResource);
 
 window.addEventListener('unhandledrejection', (e) => {
   console.warn('未处理的 promise rejection:/\n', e.reason);

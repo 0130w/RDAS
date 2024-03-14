@@ -5,7 +5,7 @@ import user from './user';
 Mock.mock('/user/login', 'post', user.login);
 Mock.mock('/user/logout', 'post', { code: 2000 });
 Mock.mock('/user/info', 'get', user.info);
-Mock.mock('/user/search', 'get', user.search);
+Mock.mock('/user/searchForBusiness', 'get', user.search);
 
 Mock.setup({
   timeout: '300-500',

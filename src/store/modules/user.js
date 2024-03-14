@@ -1,5 +1,7 @@
 import { setToken, removeToken } from '@/utils/token';
-import { login, logout, getUserInfo } from '@/api/user';
+import {
+  login, logout, getUserInfo, searchForBusiness,
+} from '@/api/user';
 import { resetRouter } from '@/router/router';
 
 const state = {
@@ -43,6 +45,11 @@ const actions = {
     const { data } = await getUserInfo();
     commit('SET_USER_INFO', data.info);
     commit('SET_USER_PERMISSIONS', data.permissions);
+    return data;
+  },
+
+  async searchForBusiness(searchText) {
+    const { data } = await searchForBusiness(searchText);
     return data;
   },
 };

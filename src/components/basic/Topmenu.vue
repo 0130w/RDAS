@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto mt-5">
+  <div class="mx-auto mt-2">
     <a-card class="rounded-lg shadow">
       <template #title>
         <a-menu
@@ -22,10 +22,7 @@
           </a-sub-menu>
         </a-menu>
       </template>
-      <component
-        :is="currentComponent"
-        class="mt-4 rounded-lg shadow"
-      ></component>
+      <component :is="currentComponent"></component>
     </a-card>
   </div>
 </template>

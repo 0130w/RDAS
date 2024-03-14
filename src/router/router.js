@@ -70,10 +70,16 @@ export const asyncRoutes = [
     component: MainLayout,
     children: [
       {
-        path: 'infopannel',
-        name: 'InfoPannel',
-        component: () => import('@/views/admin/Analytics.vue'),
-        meta: { title: '数据面板', openKey: 'pages' },
+        path: '/admin/businessAnalysis',
+        name: 'BusinessAnalysis',
+        component: () => import('@/views/admin/BusinessAnalysis.vue'),
+        meta: { title: '商户数据', openKey: 'pages' },
+      },
+      {
+        path: '/admin/userAnalysis',
+        name: 'UserAnalysis',
+        component: () => import('@/views/admin/UserAnalysis.vue'),
+        meta: { title: '用户面板', openKey: 'pages' },
       },
     ],
   },
@@ -89,12 +95,6 @@ export const asyncRoutes = [
         name: 'Search',
         component: () => import('@/views/user/Search.vue'),
         meta: { title: '搜索', openKey: 'pages' },
-      },
-      {
-        path: '/user/infoChart',
-        name: 'InfoChart',
-        component: Page,
-        meta: { title: '数据图表', openKey: 'pages' },
       },
       {
         path: '/user/friends',

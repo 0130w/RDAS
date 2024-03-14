@@ -1,34 +1,14 @@
 <template>
   <div>
     <!-- 使用flex容器包裹原有的两个区域，实现水平布局 -->
-    <div class="flex w-full">
-      <!-- 左侧内容，占比略调整为1/3 -->
-      <div class="flex-2/3 h-full p-4">
-        <div class="bg-gray-100 h-full p-4 rounded-lg">
-          <TopmenuVue
-            :menu-items="menuItems1"
-            :content-components="contentComponents1"
-          />
-        </div>
-      </div>
-
-      <!-- 右侧内容，占比略调整为1/3 -->
-      <div class="flex-1/3 p-5">
-        <div class="bg-gray-200 h-full p-4 rounded-lg">
-          <TopmenuVue
-            :menu-items="menuItems2"
-            :content-components="contentComponents2"
-          />
-        </div>
+    <div class="w-90 ml-5 mr-5">
+      <div class="bg-gray-100 h-full rounded-lg">
+        <TopmenuVue
+          :menu-items="menuItems"
+          :content-components="contentComponents"
+        />
       </div>
     </div>
-    <!-- 下方新增加的第三个区域，占满宽度 -->
-    <div class="w-full mt-4">
-      <div class="bg-gray-300 h-full p-4 rounded-lg">
-        <epic1_task12 />
-      </div>
-    </div>
-
   </div>
 </template>
 
@@ -53,7 +33,7 @@ import epic2_task6_checkin from '@comp/echarts/epic2_task6_checkin.vue';
 import epic2_task6_elite from '@comp/echarts/epic2_task6_elite.vue';
 import epic2_task6_review from '@comp/echarts/epic2_task6_review.vue';
 import epic2_task6_tips from '@comp/echarts/epic2_task6_tips.vue';
-import TopmenuVue from '../../components/basic/Topmenu.vue';
+import TopmenuVue from '@comp/basic/Topmenu.vue';
 
 export default {
   // Code block with the fix
@@ -82,10 +62,10 @@ export default {
   },
   data() {
     return {
-      menuItems1: [
+      menuItems: [
         {
-          title: '商户视角',
-          key: 'bussiness',
+          title: '条形图/折线图',
+          key: 'BarChart',
           children: [
             { title: '找出美国最常见商户（前20）', key: 'e1t1' },
             { title: '找出美国商户最多的前10个城市', key: 'e1t2' },
@@ -99,8 +79,8 @@ export default {
           ],
         },
         {
-          title: '用户视角',
-          key: 'user',
+          title: '饼图，环图',
+          key: 'Doughnut/Pie Chart',
           children: [
             { title: '分析每年加入的用户数量', key: 'e2t1' },
             { title: '统计评论达人', key: 'e2t2' },
@@ -114,26 +94,10 @@ export default {
           ],
         },
       ],
-      menuItems2: [
-        {
-          title: '商户视角',
-          key: 'chart',
-          children: [
-            { title: 'ECharts图表', key: '' },
-          ],
-        },
-        {
-          title: '用户视角',
-          key: 'custom',
-          children: [
-            { title: '自定义组件', key: '' },
-          ],
-        },
-      ],
     };
   },
   computed: {
-    contentComponents1() {
+    contentComponents() {
       return {
         e1t1: epic1_task1, // 直接引用组件对象
         e1t2: epic1_task2,
@@ -153,10 +117,6 @@ export default {
         e2t6_elite: epic2_task6_elite,
         e2t6_review: epic2_task6_review,
         e2t6_tips: epic2_task6_tips,
-      };
-    },
-    contentComponents2() {
-      return {
       };
     },
   },
