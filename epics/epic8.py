@@ -3,9 +3,10 @@ from typing import Tuple
 from pyspark.ml.feature import Tokenizer, IDF, HashingTF
 from pyspark.sql import SparkSession
 from pyspark.sql.dataframe import DataFrame
-from pyspark.sql.functions import col, udf, lit, array, avg
-from pyspark.sql.types import DoubleType, StringType, ArrayType, FloatType
-from utils import extractor, pre_process, sentiments, randn, prompt_generate, request
+from pyspark.sql.functions import col, udf, lit, array, avg, hour, collect_list, flatten, split, explode, \
+    to_timestamp
+from pyspark.sql.types import DoubleType, StringType, ArrayType
+from utils import extractor, pre_process, sentiments, randn, prompt_generate, request, gen_report
 from algorithms import similarity
 
 
@@ -146,8 +147,17 @@ def epic8_task2(business_id: str, review_df: DataFrame, tip_df: DataFrame) -> Tu
 
 
 def epic8_task3(user_id: str, review_df: DataFrame,
-                tip_df: DataFrame, user_df: DataFrame, n_recommendations=6):
-
+                tip_df: DataFrame, user_df: DataFrame, n_recommendations: int = 6) -> list:
+    """ Suggest potential friends based on user spending and reviews
+    Parameters:
+        user_id (str): user id
+        review_df (DataFrame): dataframe read from review json
+        tip_df (DataFrame): dataframe read from tip json
+        user_df (DataFrame): dataframe read from user json
+        n_recommendations (int, optional): number of recommendations. Defaults to 6
+    Returns:
+        list of recommended friends !TODO: convert list to dataframe
+    """
     user_reviews = review_df.filter(review_df['user_id'] == user_id).select('text')
     user_tips = tip_df.filter(tip_df['user_id'] == user_id).select('text')
     user_data = user_reviews.union(user_tips).withColumnRenamed('text', 'user_text')
@@ -189,5 +199,43 @@ def epic8_task3(user_id: str, review_df: DataFrame,
     similarities.sort(key=lambda x: x[1], reverse=True)
     recommended_friends = [user[0] for user in similarities[:n_recommendations]]
 
-    # TODO! convert list to dataframe
     return recommended_friends
+
+
+def epic8_task4(business_id: str, business_df: DataFrame, review_df: DataFrame,
+                checkin_df: DataFrame, tip_df: DataFrame) -> str:
+    """ Give advice to business
+    Parameters:
+        business_id (str): unique id of business
+        business_df (DataFrame): business dataframe read from business json
+        review_df (DataFrame): review dataframe read from review json
+        checkin_df (DataFrame): checkin dataframe read from checkin json
+        tip_df (DataFrame): tip dataframe read from tip json
+    Returns:
+        Report contains analysis data and advice to business
+    """
+    business_info = business_df.filter(col('business_id') == business_id)
+    business_checkin_df = checkin_df.filter(col('business_id') == business_id)
+
+    # Get the star rating of the target business
+    target_stars = business_info.select('stars').collect()[0][0]
+
+    # Stars distribution analysis
+    total_businesses = review_df.select('business_id').distinct().count()
+    businesses_below_target = (review_df.groupBy('business_id')
+                               .avg('stars').filter(col('avg(stars)') < lit(target_stars)).count())
+    percentage = (businesses_below_target / total_businesses) * 100
+
+    # analyze sentiment status of comments of user
+    union_df, response = epic8_task2(business_id, review_df, tip_df)
+    sentiments_df = union_df.select('sentiment')
+    keywords_df = union_df.select('keywords')
+    average_sentiment = sentiments_df.select(avg('sentiment')).collect()[0][0]
+    all_keywords = keywords_df.select(flatten(collect_list('keywords'))).collect()[0][0]
+    # convert the checkin timestamp to date, hour
+    business_checkin_df = business_checkin_df.withColumn('date', explode(split(col('date'), ', ')))
+    business_checkin_df = business_checkin_df.withColumn('date', to_timestamp('date', 'yyyy-MM-dd HH:mm:ss'))
+    business_checkin_df = business_checkin_df.withColumn('hour', hour('date'))
+    hourly_checkin = business_checkin_df.groupBy('hour').count().orderBy('hour')
+
+    return gen_report.generate_report(percentage, average_sentiment, all_keywords, hourly_checkin, response)
