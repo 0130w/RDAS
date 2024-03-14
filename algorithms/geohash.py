@@ -1,8 +1,7 @@
-from typing import LiteralString
 import pygeohash as pgh
 
 
-def geohash_udf(lat: float, lon: float, precision: int = 6) -> LiteralString:
+def geohash_udf(lat: float, lon: float, precision: int = 6):
     """ Compute geohash
     Parameters:
         lat (float): latitude

@@ -1,6 +1,7 @@
 # import
 from pyspark.sql import SparkSession
 from epics import epic8
+
 # Driver
 spark = SparkSession \
     .builder \
@@ -19,5 +20,7 @@ review_df = spark.read.json(review_path)
 tip_df = spark.read.json(tip_path)
 business_df = spark.read.json(business_path)
 user_df = spark.read.json(user_path)
+checkin_df = spark.read.json(checkin_path)
 # similarity = epic8.epic8_task1(spark, "_7bHUi9Uuf5__HHc_Q8guQ", tip_df, review_df, business_df)
-print(epic8.epic8_task3("_7bHUi9Uuf5__HHc_Q8guQ", review_df, tip_df, user_df))
+
+epic8.epic8_task4("--7jw19RH9JKXgFohspgQw", business_df, review_df, checkin_df, tip_df).show(5)
