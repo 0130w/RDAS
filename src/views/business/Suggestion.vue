@@ -10,7 +10,7 @@
     </div>
 
     <!-- 右侧内容 -->
-    <div class="w-3/5 p-5">
+    <div class="w-3/5 p-4">
       <!-- 这里放置右侧的内容 -->
       <div class="bg-gray-200 h-full p-4 rounded-lg">
         <SuggestionCardVue :data="SuggestionData" />

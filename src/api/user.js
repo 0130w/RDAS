@@ -35,3 +35,11 @@ export function resetPassword(data) {
     data,
   });
 }
+
+export function searchForBusiness(params) {
+  return request({
+    url: '/user/searchForBusiness',
+    method: 'get',
+    params,
+  });
+}

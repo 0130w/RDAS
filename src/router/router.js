@@ -112,10 +112,10 @@ export const asyncRoutes = [
     component: MainLayout,
     children: [
       {
-        path: '/business/infoChart',
-        name: 'InfoChart',
-        component: Page,
-        meta: { title: '数据图表', openKey: 'pages' },
+        path: '/business/reviewAnalysis',
+        name: 'ReviewAnalysis',
+        component: () => import('@/views/business/ReviewAnalysis.vue'),
+        meta: { title: '评论分析', openKey: 'pages' },
       },
       {
         path: '/business/recommend',
