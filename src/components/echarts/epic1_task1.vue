@@ -7,7 +7,7 @@
 </template>
 
 <script>
-
+// 找出美国最常见商户（前20）
 export default {
   // 钩子函数
   mounted() {
