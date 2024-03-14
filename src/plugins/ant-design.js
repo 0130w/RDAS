@@ -5,7 +5,7 @@ import {
   Form, Input, Icon,
   message, Menu, Modal, notification, Popover,
   Result, Spin,
-  Tabs, Tooltip, Select,
+  Tabs, Tooltip, Select, Card,
 } from 'ant-design-vue';
 
 Vue.config.productionTip = false;
@@ -29,6 +29,7 @@ Vue.use(Spin);
 Vue.use(Tabs);
 Vue.use(Tooltip);
 Vue.use(Select);
+Vue.use(Card);
 
 Vue.prototype.$message = message;
 Vue.prototype.$notify = notification;
