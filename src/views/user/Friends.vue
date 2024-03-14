@@ -1,13 +1,16 @@
 <template>
-  <div class="container mx-auto py-8">
-    <!-- 第一行 -->
-    <div class="flex flex-wrap -mx-4">
-      <div
-        v-for="friend in friends"
-        :key="friend.user_id"
-        class="w-full md:w-1/2 lg:w-1/3 px-4 mb-8"
-      >
-        <FriendCard :friend="friend" />
+  <div class="mx-auto mt-10">
+    <h1 class="text-2xl font-bold mb-4">推荐好友</h1>
+    <div class="container mx-auto py-8">
+      <!-- 第一行 -->
+      <div class="flex flex-wrap -mx-4">
+        <div
+          v-for="friend in friends"
+          :key="friend.user_id"
+          class="w-full md:w-1/2 lg:w-1/3 px-4 mb-8"
+        >
+          <FriendCard :friend="friend" />
+        </div>
       </div>
     </div>
   </div>

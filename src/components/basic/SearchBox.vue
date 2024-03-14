@@ -1,17 +1,29 @@
 <template>
   <div class="max-w-base rounded overflow-hidden shadow-lg">
     <div class="bg-gray-100 px-6 py-4 flex items-center">
-      <input
-        type="text"
-        class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-        placeholder="Search..."
+      <a-select
+        show-search
         v-model="searchTerm"
-        @input="handleInput"
+        placeholder="Search..."
+        class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg block w-full appearance-none leading-normal"
+        @search="handleInput"
+        @select="handleSelect"
+        filter-option="false"
       >
+        <a-select-option
+          v-for="item in searchSuggestions"
+          :key="item"
+          :value="item"
+        >
+          {{ item }}
+        </a-select-option>
+      </a-select>
       <button
         @click="handleSearch"
         class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-      >Search</button>
+      >
+        Search
+      </button>
     </div>
     <div class="bg-gray-100 px-6 pb-4 flex justify-between items-center">
       <!-- 左侧条件选择 -->
@@ -70,7 +82,7 @@
     </div>
     <div
       class="h-80 overflow-auto"
-      style="max-height: 550px; overflow-y: auto;"
+      style="max-height: 400px; overflow-y: auto;"
     >
       <List>
         <ListItem
@@ -96,6 +108,7 @@ export default {
   data() {
     return {
       searchTerm: '',
+      searchSuggestions: ['推荐1', '推荐2', '推荐3'],
       selectedItems: [],
       activeChoice: '0',
       choices: [
@@ -168,9 +181,12 @@ export default {
     handleInput(event) {
       this.searchTerm = event.target.value;
     },
+    handleSelect(value) {
+      console.log(`Selected: ${value}`);
+    },
     handleSearch() {
+      console.log(`Searching for: ${this.searchTerm}`);
       // 执行搜索操作
-      console.log('Searching for:', this.searchTerm);
     },
     toggleSelectAll() {
       if (this.selectAll) {

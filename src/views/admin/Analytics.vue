@@ -18,18 +18,28 @@ export default {
   data() {
     return {
       menuItems: [
-        { key: '1', title: '菜单1' },
-        { key: '2', title: '菜单2' },
-        { key: '3', title: '菜单3' },
+        {
+          title: '图表',
+          key: 'chart',
+          children: [
+            { title: 'ECharts图表', key: 'echarts' },
+          ],
+        },
+        {
+          title: '自定义',
+          key: 'custom',
+          children: [
+            { title: '自定义组件', key: 'customComp' },
+          ],
+        },
       ],
     };
   },
   computed: {
     contentComponents() {
       return {
-        1: exampleVue, // 直接引用组件对象
-        2: exampleVue,
-        3: exampleVue,
+        echarts: exampleVue, // 直接引用组件对象
+        customComp: exampleVue,
       };
     },
   },

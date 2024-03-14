@@ -8,12 +8,18 @@
           :selected-keys="[currentKey]"
           class="border-b"
         >
-          <a-menu-item
-            v-for="item in menuItems"
-            :key="item.key"
+          <a-sub-menu
+            v-for="menu in menuItems"
+            :key="menu.key"
+            :title="menu.title"
           >
-            {{ item.title }}
-          </a-menu-item>
+            <a-menu-item
+              v-for="item in menu.children"
+              :key="item.key"
+            >
+              {{ item.title }}
+            </a-menu-item>
+          </a-sub-menu>
         </a-menu>
       </template>
       <component
@@ -25,12 +31,7 @@
 </template>
 
 <script>
-import exampleVue from '@comp/echarts/example.vue';
-
 export default {
-  components: {
-    exampleVue,
-  },
   props: {
     menuItems: {
       type: Array,
@@ -43,7 +44,10 @@ export default {
   },
   data() {
     return {
-      currentKey: this.menuItems[0].key, // 默认显示第一个菜单项的内容
+      // 初始化为第一个菜单项的第一个子项（如果存在）
+      currentKey: this.menuItems.length > 0 && this.menuItems[0].children.length > 0
+        ? this.menuItems[0].children[0].key
+        : null,
     };
   },
   computed: {
