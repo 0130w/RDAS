@@ -87,7 +87,7 @@ export const asyncRoutes = [
       {
         path: '/user/search',
         name: 'Search',
-        component: Page,
+        component: () => import('@/views/user/Search.vue'),
         meta: { title: '搜索', openKey: 'pages' },
       },
       {
@@ -95,6 +95,12 @@ export const asyncRoutes = [
         name: 'InfoChart',
         component: Page,
         meta: { title: '数据图表', openKey: 'pages' },
+      },
+      {
+        path: '/user/friends',
+        name: 'Friends',
+        component: () => import('@/views/user/Friends.vue'),
+        meta: { title: '好友推荐', openKey: 'pages' },
       },
     ],
   },
