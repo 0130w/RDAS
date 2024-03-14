@@ -1,6 +1,6 @@
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql import Window
-from pyspark.sql.functions import col, count, avg, sum, max, min, when
+from pyspark.sql.functions import col, count, avg, sum, max, min, when,year
 
 
 def epic1_task1(business_df: DataFrame):
@@ -179,3 +179,23 @@ def epic1_task11(business_df: DataFrame, target_cuisines=None):
         max(col("stars")).over(window_spec).alias("max_stars")
     ) \
         .distinct()
+
+def epic1_task12(business_df:DataFrame,checkin_df:DataFrame, target_cuisines: list):
+    """
+    Parameters:
+        business_df: DataFrame - a DataFrame containing business data
+        checkin_df: DataFrame - a DataFrame containing checkin data
+        target_cuisines: list - a list of target cuisines
+    Returns:
+        DataFrame - a DataFrame containing the number of checkins for each target cuisine by year"""
+    join_business = business_df.join(checkin_df, business_df['business_id'] == checkin_df['business_id']) 
+    if target_cuisines is None:
+        target_cuisines = target_cuisines_task9to12
+    filtered_business_df = epic1_filter_by_target_cuisines(join_business, target_cuisines_task9to12)
+    filtered_business_df = filtered_business_df.withColumn('year',year('date')).drop('date')
+
+    American_count_by_year = filtered_business_df.filter(filtered_business_df.target_cuisines == 'American').groupBy("year").count().orderBy("year")
+    Mexican_count_by_year = filtered_business_df.filter(filtered_business_df.target_cuisines == 'Mexican').groupBy("year").count().orderBy("year")
+    Chinese_count_by_year = filtered_business_df.filter(filtered_business_df.target_cuisines == 'Chinese').groupBy("year").count().orderBy("year")
+
+    return American_count_by_year, Mexican_count_by_year, Chinese_count_by_year
