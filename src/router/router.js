@@ -120,7 +120,7 @@ export const asyncRoutes = [
       {
         path: '/business/recommend',
         name: 'Recommend',
-        component: Page,
+        component: () => import('@/views/business/Suggestion.vue'),
         meta: { title: '经营建议', openKey: 'pages' },
       },
     ],

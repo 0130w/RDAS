@@ -7,7 +7,7 @@
 </template>
 
 <script>
-
+// 找出美国商户最多的前10个城市
 export default {
   // 钩子函数
   mounted() {

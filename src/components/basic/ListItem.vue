@@ -25,7 +25,7 @@
         </div>
         <div>
           <dt class="sr-only">Rating</dt>
-          <dd class="px-1.5 ring-1 ring-slate-200 rounded bg-grey-200">{{ movie.rating }}</dd>
+          <dd class="inline-block px-1.5 ring-1 px-3 ring-slate-200 rounded bg-gray-200 font-semibold">{{ movie.rating }}</dd>
         </div>
         <div class="ml-2">
           <dt class="sr-only">Year</dt>
