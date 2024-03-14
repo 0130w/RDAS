@@ -2,7 +2,7 @@
   <!-- 一定要设置宽高,且宽高必须是行内样式，单位必须是px -->
   <div
     id="myChart"
-    :style="{ width: '800px', height: '400px' }"
+    :style="{ width: '700px', height: '400px' }"
   ></div>
 </template>
 
@@ -35,6 +35,11 @@ export default {
         {
           data: [120, 200, 150],
           type: 'bar',
+          label: {
+            show: true, // 显示标签
+            position: 'top', // 标签的位置
+            // 可以添加更多样式配置，如字体大小、颜色等
+          },
         },
       };
       // 设置option

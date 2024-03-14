@@ -7,7 +7,7 @@
 </template>
 
 <script>
-// 分析每年加入的用户数量
+// 统计出每年的tips数
 export default {
   mounted() {
     this.draw();
@@ -28,7 +28,6 @@ export default {
 
       // 绘制图表
       const option = {
-        backgroundColor: 'transparent',
         tooltip: {
           trigger: 'axis',
           // 显示增长率的百分比格式

@@ -1,3 +1,5 @@
+// 传入两类用户 一类预测为0 另一类预测为1
+// 可以改成饼图
 <template>
   <!-- 一定要设置宽高,且宽高必须是行内样式，单位必须是px -->
   <div
@@ -7,7 +9,7 @@
 </template>
 
 <script>
-// 统计不同类型（中国菜、美式、墨西哥）的餐厅的评分分布
+// 统计每年优质用户、普通用户比例
 export default {
   // 钩子函数
   mounted() {
@@ -21,7 +23,7 @@ export default {
       const option = {
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed'],
+          data: ['优质用户', '普通用户'],
           axisLabel: {
             rotate: 90, // 旋转角度
           },
@@ -31,16 +33,12 @@ export default {
           type: 'value',
           name: '数量',
         },
-        series:
-        {
-          data: [120, 200, 150],
-          type: 'bar',
-          label: {
-            show: true, // 显示标签
-            position: 'top', // 标签的位置
-            // 可以添加更多样式配置，如字体大小、颜色等
+        series: [
+          {
+            data: [120, 200],
+            type: 'bar',
           },
-        },
+        ],
       };
       // 设置option
       myChart.setOption(option);

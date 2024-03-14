@@ -2,7 +2,7 @@
   <!-- 一定要设置宽高,且宽高必须是行内样式，单位必须是px -->
   <div
     id="myChart"
-    :style="{ width: '700px', height: '400px' }"
+    :style="{ width: '600px', height: '300px' }"
   ></div>
 </template>
 

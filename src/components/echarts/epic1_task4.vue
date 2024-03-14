@@ -2,7 +2,7 @@
   <!-- 一定要设置宽高,且宽高必须是行内样式，单位必须是px -->
   <div
     id="myChart"
-    :style="{ width: '800px', height: '400px' }"
+    :style="{ width: '700px', height: '400px' }"
   ></div>
 </template>
 
@@ -71,12 +71,22 @@ export default {
             name: '数量',
             type: 'bar',
             data: [120, 200, 150, 80, 70, 120, 200, 150, 80, 70],
+            label: {
+              show: true, // 显示标签
+              position: 'top', // 标签的位置
+              // 可以添加更多样式配置，如字体大小、颜色等
+            },
           },
           {
             name: '评分',
             type: 'bar',
             yAxisIndex: 1, // 使用次要维度的y轴
             data: [2.3, 1.8, 3.2, 2.6, 2.4, 2.7, 1.7, 3.1, 2.9, 1.6],
+            label: {
+              show: true, // 显示标签
+              position: 'top', // 标签的位置
+              // 可以添加更多样式配置，如字体大小、颜色等
+            },
           },
         ],
       };
