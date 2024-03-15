@@ -84,9 +84,9 @@
       class="h-80 overflow-auto"
       style="height: 400px; overflow-y: auto;"
     >
-      <List>
+      <List v-if="businesses">
         <ListItem
-          v-for="business in businesss"
+          v-for="business in businesses"
           :key="business.id"
           :business="business"
         />
@@ -100,6 +100,7 @@ import Nav from '@comp/basic/Nav.vue';
 import NavItem from '@comp/basic/NavItem.vue';
 import List from '@comp/basic/List.vue';
 import ListItem from '@comp/basic/ListItem.vue';
+import Axios from 'axios';
 
 export default {
   components: {
@@ -128,6 +129,14 @@ export default {
       ],
     };
   },
+  mounted() {
+    Axios.get('/user/recommendByHistory')
+      .then((response) => {
+        console.log(response);
+        this.businesses = response.data.data.businesses;
+        console.log(this.businesses);
+      });
+  },
   methods: {
     handleInput(event) {
       this.searchTerm = event.target.value;
@@ -140,8 +149,8 @@ export default {
       if (values) { // 假设你要检查的是 values 是否有效
         this.loading = true;
         try {
-          // 假设 dispatch 返回一个对象，包含 CAN_LOGIN 和 business 数据
-          const response = await this.$store.dispatch('user/searchForBusiness', values);
+          // 假设 dispatch 返回一个对象，包含 business 数据
+          const response = await this.$store.dispatch('searchForBusiness', values);
           if (response) {
             this.businesses = response.businesses; // 确保这里的变量名与你期望的一致
           } else {

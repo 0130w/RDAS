@@ -1,12 +1,13 @@
 import { setToken, removeToken } from '@/utils/token';
 import {
-  login, logout, getUserInfo, searchForBusiness,
+  login, logout, getUserInfo,
 } from '@/api/user';
 import { resetRouter } from '@/router/router';
 
 const state = {
   permissions: null, // NOTE: 此处 permission 不能初始化为空数组
   info: {},
+  businesses: [],
 };
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
   },
   SET_USER_PERMISSIONS(state, permissions) {
     state.permissions = permissions;
+  },
+  SET_USER_BUSINESSES(state, businesses) {
+    state.businesses = businesses;
   },
 };
 
@@ -48,10 +52,6 @@ const actions = {
     return data;
   },
 
-  async searchForBusiness(searchText) {
-    const { data } = await searchForBusiness(searchText);
-    return data;
-  },
 };
 
 export default {

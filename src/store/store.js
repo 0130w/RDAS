@@ -9,6 +9,7 @@ import actions from './actions';
 
 import user from './modules/user';
 import auth from './modules/auth';
+import recom from './modules/recom';
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   modules: {
     user,
     auth,
+    recom,
   },
 
   state,
