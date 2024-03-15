@@ -21,7 +21,7 @@ export default {
       const option = {
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          data: ['Philadelphia', 'Tucson', 'Tampa', 'Indianapolis', 'Nashville', 'New Orleans', 'Reno', 'Edmonton', 'Saint Louis', 'Santa Barbara'],
           axisLabel: {
             rotate: 90, // 旋转角度
           },
@@ -33,7 +33,7 @@ export default {
         },
         series: [
           {
-            data: [120, 200, 150, 80, 70, 120, 200, 150, 80, 70],
+            data: [14569, 9250, 9050, 7540, 6971, 6209, 5935, 5054, 4827, 3829],
             type: 'bar',
             label: {
               show: true, // 显示标签

@@ -21,7 +21,7 @@ export default {
       const option = {
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          data: ['Mike', 'Katie', 'Fox', 'Richard', 'Daniel', 'Jessica', 'Ruggy', 'Megan', 'Emi', 'Peter'],
           axisLabel: {
             rotate: 90, // 旋转角度
           },
@@ -33,7 +33,7 @@ export default {
         },
         series: [
           {
-            data: [120, 200, 150, 80, 70],
+            data: [12497, 3642, 3493, 3243, 3138, 2627, 2547, 2451, 2424, 2388],
             type: 'bar',
             label: {
               show: true, // 显示标签

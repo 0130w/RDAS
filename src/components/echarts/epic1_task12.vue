@@ -23,9 +23,7 @@ export default {
       // 绘制图表
       const option = {
         color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
-        title: {
-          text: 'Gradient Stacked Area Chart',
-        },
+
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -53,7 +51,7 @@ export default {
           {
             type: 'category',
             boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022],
             name: '种类',
           },
 
@@ -90,7 +88,7 @@ export default {
             emphasis: {
               focus: 'series',
             },
-            data: [140, 232, 101, 264, 90, 340, 250],
+            data: [1, 4348, 1642, 1046, 887, 765, 801, 641, 597, 516, 494, 321, 301, 6],
           },
           {
             name: 'Line 2',
@@ -117,7 +115,7 @@ export default {
             emphasis: {
               focus: 'series',
             },
-            data: [120, 282, 111, 234, 220, 340, 310],
+            data: [0, 1221, 581, 318, 285, 311, 278, 290, 295, 260, 289, 203, 216, 7],
           },
           {
             name: 'Line 3',
@@ -144,7 +142,7 @@ export default {
             emphasis: {
               focus: 'series',
             },
-            data: [320, 132, 201, 334, 190, 130, 220],
+            data: [0, 865, 626, 368, 247, 186, 156, 129, 115, 103, 99, 46, 54, 1],
           },
 
         ],

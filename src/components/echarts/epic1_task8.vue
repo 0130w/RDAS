@@ -21,7 +21,7 @@ export default {
       const option = {
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          data: ['Hollywood Cafe & Sports Bar', 'Alenco Fence & Lumber', 'Finders Keepers', 'Mi Tenampa', 'Curb Appeal Auto Detailing', "Bagger Dave's Burger Tavern", 'Tire Techs USA', 'Hopewell Road Pharmacy', 'Rose Endodontics', 'Dry-At-Last-Waterproofing', 'Gin & Pop', 'Red Zone 2', 'Suppa', 'Freebirds', "Elicia's Pizza", 'Belmond El Encanto', 'Bangkok Express', 'Huong Sizzling Wok', 'Wayback Burgers', "Slizzy Mcgee's"],
           axisLabel: {
             rotate: 90, // 旋转角度
           },
@@ -33,7 +33,7 @@ export default {
         },
         series: [
           {
-            data: [120, 200, 150, 80, 70, 120, 200, 150, 80, 70, 120, 200, 150, 80, 70, 120, 200, 150, 80, 70],
+            data: [23, 5, 2, 38, 8, 4, 8, 4, 6, 5, 37, 3, 50, 2, 5, 203, 4, 47, 2, 3],
             type: 'bar',
             label: {
               show: true, // 显示标签
