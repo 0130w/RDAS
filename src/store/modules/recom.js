@@ -13,8 +13,9 @@ const mutations = {
 };
 
 const actions = {
-  async searchForBusiness({ commit }, searchText) {
-    const { data } = await searchForBusiness(searchText);
+
+  async searchForBusiness({ commit }, { searchParams }) {
+    const { data } = await searchForBusiness({ searchParams });
     commit('SET_USER_BUSINESSES', data.businesses);
     return data;
   },

@@ -9,7 +9,7 @@
     />
     <div class="min-w-0 relative flex-auto">
       <h2 class="font-semibold text-slate-900 truncate pr-20">{{ business.title }}</h2>
-      <dl class="mt-2 flex flex-wrap text-sm leading-6 font-medium">
+      <dl class="mt-2 flex flex-wrap text-sm leading-6 font-medium whitespace-normal">
         <div class="absolute top-0 right-0 flex items-center space-x-1">
           <dt class="text-sky-500">
             <span class="sr-only">Star rating</span>
@@ -24,15 +24,17 @@
           <dd>{{ business.starRating }}</dd>
         </div>
         <div>
-          <dt class="sr-only">Rating</dt>
-          <dd class="inline-block px-1.5 ring-1 px-3 ring-slate-200 rounded bg-gray-200 font-semibold">{{ business.rating }}</dd>
+          <dt class="sr-only">IsOpen</dt>
+          <dd :class="`inline-block px-1.5 ring-1 px-3 ring-slate-200 rounded-lg font-semibold ${business.isOpen === 1 ? 'bg-green-200' : 'bg-gray-300'}`">
+            {{ business.isOpen === 1 ? 'Opening' : 'Closed' }}
+          </dd>
         </div>
         <div class="ml-2">
-          <dt class="sr-only">Year</dt>
-          <dd>{{ business.year }}</dd>
+          <dt class="sr-only">City</dt>
+          <dd>{{ business.city }}</dd>
         </div>
         <div>
-          <dt class="sr-only">Genre</dt>
+          <dt class="sr-only">Address</dt>
           <dd class="flex items-center">
             <svg
               width="2"
@@ -47,11 +49,11 @@
                 r="1"
               />
             </svg>
-            {{ business.genre }}
+            {{ business.address }}
           </dd>
         </div>
         <div>
-          <dt class="sr-only">Runtime</dt>
+          <dt class="sr-only">Distance</dt>
           <dd class="flex items-center">
             <svg
               width="2"
@@ -66,12 +68,12 @@
                 r="1"
               />
             </svg>
-            {{ business.runtime }}
+            {{ business.distance }}
           </dd>
         </div>
-        <div class="flex-none w-full mt-2 font-normal">
-          <dt class="sr-only">Cast</dt>
-          <dd class="text-slate-400">{{ business.cast }}</dd>
+        <div class="flex-none w-full mt-2 font-normal truncate">
+          <dt class="sr-only">Categories</dt>
+          <dd class="text-slate-400">{{ business.categories }}</dd>
         </div>
       </dl>
     </div>

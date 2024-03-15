@@ -7,7 +7,6 @@ import { resetRouter } from '@/router/router';
 const state = {
   permissions: null, // NOTE: 此处 permission 不能初始化为空数组
   info: {},
-  businesses: [],
 };
 
 const mutations = {

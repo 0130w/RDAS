@@ -1,26 +1,40 @@
 <template>
-  <div class="max-w-base rounded overflow-hidden shadow-lg">
-    <div class="bg-gray-100 px-6 py-4 flex items-center">
+  <div class="max-w-base rounded overflow-hidden shadow-lg max-w-2xl">
+    <div class="bg-gray-100 px-6 py-4 flex items-center justify-between">
+      <!-- 纬度输入框 -->
+      <input
+        type="text"
+        class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-1/4 appearance-none leading-normal"
+        placeholder="Latitude"
+        v-model="latitude"
+        @input="handleLatitudeInput"
+      />
+      <!-- 经度输入框 -->
+      <input
+        type="text"
+        class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-1/4 appearance-none leading-normal"
+        placeholder="Longitude"
+        v-model="longitude"
+        @input="handleLongitudeInput"
+      />
+      <!-- 城市下拉选项 -->
       <a-select
-        show-search
-        v-model="searchTerm"
-        placeholder="Search..."
-        class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg block w-full appearance-none leading-normal"
-        @search="handleInput"
-        @select="handleSelect"
-        filter-option="false"
+        v-model="selectedCity"
+        class="w-1/4 max-w-xs"
+        placeholder="Select a city"
+        @change="handleCityChange"
       >
         <a-select-option
-          v-for="item in searchSuggestions"
-          :key="item"
-          :value="item"
+          v-for="city in cities"
+          :key="city.value"
+          :value="city.value"
         >
-          {{ item }}
+          {{ city.label }}
         </a-select-option>
       </a-select>
       <button
-        @click="handleSearch(searchTerm)"
-        class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+        @click="handleSearch(latitude, longitude, selectedCity)"
+        class=" ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
       >
         Search
       </button>
@@ -108,8 +122,14 @@ export default {
   },
   data() {
     return {
-      searchTerm: '',
-      searchSuggestions: ['推荐1', '推荐2', '推荐3'],
+      latitude: '',
+      longitude: '',
+      selectedCity: null,
+      cities: [
+        { value: 'beijing', label: 'Beijing' },
+        { value: 'shanghai', label: 'Shanghai' },
+        // 更多城市...
+      ],
       selectedItems: [],
       activeChoice: '0',
       choices: [
@@ -132,40 +152,51 @@ export default {
   mounted() {
     Axios.get('/user/recommendByHistory')
       .then((response) => {
-        console.log(response);
         this.businesses = response.data.data.businesses;
-        console.log(this.businesses);
       });
   },
   methods: {
-    handleInput(event) {
-      this.searchTerm = event.target.value;
+    handleLatitudeInput() {
+      // 处理纬度输入
+    },
+    handleLongitudeInput() {
+      // 处理经度输入
+    },
+    handleCityChange(value) {
+      // 处理城市选择
+      console.log('Selected city:', value);
     },
     handleSelect(value) {
       console.log(`Selected: ${value}`);
     },
-    async handleSearch(values) {
-      console.log('searching for:', values);
-      if (values) { // 假设你要检查的是 values 是否有效
+    async handleSearch(latitude, longitude, selectedCity) {
+      console.log('Searching for:', { latitude, longitude, selectedCity });
+      if (latitude && longitude && selectedCity) { // 确保所有值都已提供
         this.loading = true;
         try {
-          // 假设 dispatch 返回一个对象，包含 business 数据
-          const response = await this.$store.dispatch('searchForBusiness', values);
-          if (response) {
-            this.businesses = response.businesses; // 确保这里的变量名与你期望的一致
+          // 构建搜索参数
+          const searchParams = {
+            latitude,
+            longitude,
+            city: selectedCity,
+          };
+          // 发起搜索请求，这里假设你有一个对应的action来处理搜索
+          const response = await this.$store.dispatch('user/searchForBusiness', searchParams);
+          if (response && response.businesses) {
+            console.log(response);
+            this.businesses = response.businesses;
           } else {
-            this.$message.error('搜索失败');
+            this.$message.error('搜索未找到结果');
           }
         } catch (error) {
-          // 如果在尝试中捕获到错误，可以在这里处理
           console.error(error);
           this.$message.error('搜索过程中出现错误');
         } finally {
           this.loading = false;
         }
       } else {
-        // 处理 values 无效的情况
-        this.$message.error('提供的搜索值无效');
+        // 如果必要的搜索条件没有全部提供
+        this.$message.error('请完整填写搜索条件');
       }
     },
     toggleSelectAll() {

@@ -35,3 +35,10 @@ export function resetPassword(data) {
     data,
   });
 }
+
+export function friendRecommend() {
+  return request({
+    url: '/user/friendRecommend',
+    method: 'get',
+  });
+}

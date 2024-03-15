@@ -43,11 +43,11 @@ service.interceptors.response.use(
     // 解构出数据中的状态码和消息
     const { code, message = '接口异常' } = data;
     // 如果状态码不为 2000，则显示警告消息
-    if (code !== 2000) {
+    if (code !== 200) {
       Message.warning(message);
 
       // 如果状态码为 4018，表示未授权，则移除 token 并刷新页面
-      if (code === 4018) {
+      if (code === 400) {
         removeToken();
         window.location.reload();
       }

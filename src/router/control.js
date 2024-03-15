@@ -28,7 +28,9 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           resetRouter();
-          const { permissions } = await store.dispatch('user/getUserInfo');
+          const { permissions } = await store.dispatch('user/getUserInfo', getToken());
+          console.log(store.state.user.permissions);
+          console.log(getToken());
           const accessedRoutes = await store.dispatch('auth/generateRoutes', permissions);
           // 动态添加路由
           router.addRoutes(accessedRoutes);
