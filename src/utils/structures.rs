@@ -1,5 +1,11 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Claims {
+    pub sub: String,
+    pub exp: usize
+}
 
 pub struct Position {
     pub latitude: f64,
@@ -42,4 +48,21 @@ pub struct FilterConditions {
     distance_filter: Option<DistanceCategories>,
     stars_filter: Option<f64>,
     facility_filter: Option<String>
+}
+
+#[derive(Serialize)]
+pub struct LoginData {
+    pub token: String
+}
+
+#[derive(Serialize)]
+pub struct LoginResponse {
+    pub code: i32,
+    pub data: LoginData
+}
+
+#[derive(Deserialize)]
+pub struct LoginRequest {
+    pub username: String,
+    pub password: String
 }
