@@ -22,9 +22,9 @@ const mutations = {
 };
 
 const actions = {
-  async login(_, { account, password }) {
+  async login(_, { username, password }) {
     try {
-      const { data: { token } } = await login({ account, password });
+      const { data: { token } } = await login({ username, password });
       setToken(token);
       return true;
     } catch {

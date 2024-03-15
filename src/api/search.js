@@ -1,5 +1,5 @@
 /**
- * 商户相关接口
+ * 搜索相关接口
  */
 
 import request from '@/plugins/axios';
@@ -12,9 +12,10 @@ export function searchForBusiness(params) {
   });
 }
 
-export function recommendByHistory() {
+export function recommendByHistory(params) {
   return request({
     url: '/user/recommendByHistory',
     method: 'get',
+    params,
   });
 }

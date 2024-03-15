@@ -103,6 +103,7 @@
           v-for="business in businesses"
           :key="business.id"
           :business="business"
+          @select-business="handleSelectBusiness"
         />
       </List>
     </div>
@@ -114,7 +115,7 @@ import Nav from '@comp/basic/Nav.vue';
 import NavItem from '@comp/basic/NavItem.vue';
 import List from '@comp/basic/List.vue';
 import ListItem from '@comp/basic/ListItem.vue';
-import Axios from 'axios';
+import { getToken } from '@/utils/token';
 
 export default {
   components: {
@@ -150,10 +151,11 @@ export default {
     };
   },
   mounted() {
-    Axios.get('/user/recommendByHistory')
-      .then((response) => {
-        this.businesses = response.data.data.businesses;
-      });
+    // Axios.get('/user/recommendByHistory')
+    //   .then((response) => {
+    //     this.businesses = response.data.data.businesses;
+    //   });
+    this.recommendByHistory();
   },
   methods: {
     handleLatitudeInput() {
@@ -169,6 +171,14 @@ export default {
     handleSelect(value) {
       console.log(`Selected: ${value}`);
     },
+    async recommendByHistory() {
+      try {
+        const response = await this.$store.dispatch('recommendByHistory', getToken());
+        this.businesses = response.businesses;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async handleSearch(latitude, longitude, selectedCity) {
       console.log('Searching for:', { latitude, longitude, selectedCity });
       if (latitude && longitude && selectedCity) { // 确保所有值都已提供
@@ -181,7 +191,7 @@ export default {
             city: selectedCity,
           };
           // 发起搜索请求，这里假设你有一个对应的action来处理搜索
-          const response = await this.$store.dispatch('user/searchForBusiness', searchParams);
+          const response = await this.$store.dispatch('searchForBusiness', searchParams);
           if (response && response.businesses) {
             console.log(response);
             this.businesses = response.businesses;
@@ -230,6 +240,10 @@ export default {
           console.log(choice.label, choice.isActive);
         }
       });
+    },
+    handleSelectBusiness(businessId) {
+      this.$emit('select-business', businessId);
+      // 在这里处理选中的businessId，可以将其存储在父组件的data中或者进行其他操作
     },
   },
 };

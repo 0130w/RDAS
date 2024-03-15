@@ -77,6 +77,8 @@
 </template>
 
 <script>
+import { PRIORITY } from 'echarts';
+
 export default {
   name: 'Login',
 
@@ -108,6 +110,8 @@ export default {
   },
 
   mounted() {
+    console.log(process.env.VUE_APP_REQUEST_BASE_URL);
+    console.log(process.env.VUE_APP_BASE_API);
     // MOCK: 模拟登录，页面加载时自动填写账号
     this.form.setFieldsValue({
       username: 'admin@magic.com',
@@ -130,6 +134,7 @@ export default {
         if (!error) {
           this.loading = true;
           try {
+            console.log(values);
             const CAN_LOGIN = await this.$store.dispatch('user/login', values);
             if (CAN_LOGIN) {
               const { redirectPath } = this.$store.state;

@@ -17,6 +17,9 @@ module.exports = {
       [process.env.VUE_APP_REQUEST_BASE_URL]: {
         target: process.env.VUE_APP_BASE_API,
         changeOrigin: true,
+        pathRewrite: {
+          [`^${process.env.VUE_APP_REQUEST_BASE_URL}`]: '',
+        },
       },
     },
   },
@@ -65,9 +68,6 @@ module.exports = {
   },
 
   configureWebpack: (config) => {
-    // config.externals = {
-    //   echarts: 'echarts', // 之后可以在组件中直接使用echarts
-    // };
     config.plugins.push(
       new AntdDayjsWebpackPlugin({
         preset: 'antdv3',

@@ -5,7 +5,8 @@ export default {
       businesses: [
         {
           id: 1,
-          title: 'The UPS Store',
+          business_id: 162165,
+          name: 'The UPS Store',
           isOpen: 1,
           starRating: 3.6,
           city: 'Affton',
@@ -15,7 +16,8 @@ export default {
         },
         {
           id: 2,
-          title: 'Adams Dental',
+          business_id: 162166,
+          name: 'Adams Dental',
           isOpen: 0,
           starRating: 2.7,
           city: 'Clearwater',
@@ -25,7 +27,8 @@ export default {
         },
         {
           id: 3,
-          title: 'Adams Dental',
+          business_id: 162167,
+          name: 'Adams Dental',
           isOpen: 0,
           starRating: 2.7,
           city: 'Clearwater',
@@ -35,7 +38,8 @@ export default {
         },
         {
           id: 4,
-          title: 'Adams Dental',
+          business_id: 162168,
+          name: 'Adams Dental',
           isOpen: 0,
           starRating: 2.7,
           city: 'Clearwater',
@@ -47,11 +51,12 @@ export default {
     },
   },
   recommend2: {
-    code: 2000,
+    code: 200,
     data: {
       businesses: [{
         id: 1,
-        title: 'The UPS Store',
+        business_id: 162165,
+        name: 'The UPS Store',
         isOpen: 1,
         starRating: 3.6,
         city: 'Affton',
@@ -61,7 +66,8 @@ export default {
       },
       {
         id: 2,
-        title: 'Adams Dental',
+        business_id: 162167,
+        name: 'Adams Dental',
         isOpen: 0,
         starRating: 2.7,
         city: 'Clearwater',
