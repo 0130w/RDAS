@@ -3,7 +3,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use actix_web::{get, post, web::{self, Json}, HttpRequest, HttpResponse, Responder};
 use jsonwebtoken::{ decode, encode, errors::ErrorKind, DecodingKey, EncodingKey, Header, Validation};
 use serde_json::Value;
-use crate::utils::{parser::parse_json, structures::{BusinessAfterFilterInfo, BusinessInfo, BusinessQuery, BusinessResponse, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, SearchParams, Suggestion, UserInfoData}};
+use crate::utils::{parser::parse_json, structures::{BusinessInfo, BusinessQuery, BusinessResponse, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, SearchParams, Suggestion, UserInfoData}};
 
 #[post("/user/login")]
 pub async fn login(login_info: Json<LoginRequest>) -> impl Responder {
@@ -51,7 +51,11 @@ pub async fn logout() -> impl Responder {
 #[get("/user/searchForBusiness")]
 pub async fn search_for_business(query: web::Query<SearchParams>) -> impl Responder {
     let choice = query.choice.to_string();
-    let file_contents = std::fs::read_to_string("dataset/epic7_task3.json").unwrap();
+    let file_contents = match choice.as_ref() {
+        "2" => { std::fs::read_to_string("dataset/epic7_task3_2.json").unwrap() },
+        "3" => { std::fs::read_to_string("dataset/epic7_task3_3.json").unwrap() },
+        _ => { std::fs::read_to_string("dataset/epic7_task3_1.json").unwrap() }
+    };
     let business_with_filter: BusinessesWrapper = serde_json::from_str(&file_contents).unwrap();
     
     match serde_json::to_value(&business_with_filter) {
@@ -116,11 +120,6 @@ pub async fn get_suggestion() -> impl Responder {
         Err(e) => HttpResponse::InternalServerError().body(format!("Error converting to json : {}", e))
     }
 }
-
-// #[get("/user/friendRecommend")]
-// pub async fn friend_recommend(user_id: String) -> impl Responder {
-    
-// }
 
 fn decode_token(token: &str) -> Result<Claims, String> {
     let key = "secret".as_ref();
