@@ -15,7 +15,7 @@
         <p class="text-gray-600 text-sm">Address: {{ business.address }}</p>
         <div class="mt-2">
           <span
-            v-if="business.isOpen === 1"
+            v-if="business.is_open === 1"
             class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-700 mr-2"
           >正在营业</span>
           <span

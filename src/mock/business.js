@@ -7,7 +7,7 @@ export default {
         categories: 'Doctors, Traditional Chinese Medicine, Naturopathicolistic, Acupuncture, Health & Medical, Nutritionists',
         address: '1616 Chapala St, Ste 2',
         city: 'Santa Barbara',
-        isOpen: 0,
+        is_open: 0,
         image: '',
         review_count: 120,
         rating: 4.5,

@@ -23,7 +23,7 @@
 <script>
 import SuggestionCardVue from '@comp/basic/SuggestionCard.vue';
 import BusinessCard from '@comp/basic/BusinessCard.vue';
-import Axios from 'axios';
+import { getBusinessInfo, getSuggestion } from '@/api/business.js';
 
 export default {
   components: {
@@ -55,7 +55,7 @@ export default {
     async getBusinessInfo() {
       const businessId = this.info.business_id;
       try {
-        const response = await Axios.get('/business/getBusinessInfo', businessId);
+        const response = await getBusinessInfo(businessId);
         this.businessInfo = response.data.data.businessInfo;
       } catch (error) {
         console.error('获取商户信息失败:', error);
@@ -64,7 +64,7 @@ export default {
     async getSuggestion() {
       const businessId = this.info.business_id;
       try {
-        const response = await Axios.get('/business/getSuggestion', businessId);
+        const response = await getSuggestion(businessId);
         this.SuggestionData.regionalImpacts.description = response.data.data.suggestionText;
       } catch (error) {
         console.error('获取商户经营建议失败:', error);
