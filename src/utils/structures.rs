@@ -104,4 +104,6 @@ pub struct BusinessAfterFilterInfo {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct BusinessesAfterFilterInfo(Vec<BusinessAfterFilterInfo>);
+pub struct BusinessesWrapper {
+    pub businesses: Vec<BusinessAfterFilterInfo>
+}
