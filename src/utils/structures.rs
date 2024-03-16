@@ -89,3 +89,16 @@ pub struct BusinessWithGradeScore {
     pub business_id: String,
     pub grade_score: f64
 }
+
+#[derive(Serialize, Deserialize)]
+pub struct BusinessAfterFilterInfo {
+    pub id: i32,
+    pub business_id: String,
+    pub name: String,
+    pub is_open: i32,
+    pub stars: i32,
+    pub city: String,
+    pub address: String,
+    pub distance: String,
+    pub categories: String
+}
