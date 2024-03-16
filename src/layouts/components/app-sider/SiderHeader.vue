@@ -8,7 +8,7 @@
     <span
       v-show="isSideMenuOpened"
       class="ml-4 primary text-2xl font-bold cursor-default select-none"
-    >Venus</span>
+    >RDAS</span>
 
     <div
       class="circle-area"

@@ -57,7 +57,7 @@ export const asyncRoutes = [
       {
         path: 'homepage',
         name: 'HomePage',
-        component: Page,
+        component: () => import('@/views/HomePage.vue'),
         meta: { title: '首页', icon: 'file-text' },
       },
     ],
