@@ -1,30 +1,33 @@
 <template>
-  <div class="rounded overflow-hidden shadow-lg bg-white p-2">
+  <div
+    class="rounded overflow-hidden shadow-lg bg-white p-2"
+    style="width: 450px;"
+  >
     <img
       class="w-full h-64 object-cover p-4"
       :src="business.image"
       alt="商户图片"
     >
-    <div class="px-6 py-4 flex flex-wrap justify-between items-start">
+    <div class="px-6 py-2 font-bold text-xl">{{ business.name }}</div>
+    <div class="px-6 py-2 flex flex-wrap justify-between items-start">
       <div>
-        <div class="font-bold text-xl mb-2">{{ business.name }}</div>
-        <p class="text-gray-700 text-base">{{ business.category }} | {{ business.city }}</p>
-        <p class="text-gray-600 text-sm">{{ business.address }}</p>
+        <p class="text-gray-700 text-base">City: {{ business.city }}</p>
+        <p class="text-gray-600 text-sm">Address: {{ business.address }}</p>
         <div class="mt-2">
           <span
-            v-if="business.isOpen"
+            v-if="business.isOpen === 1"
             class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-700 mr-2"
           >正在营业</span>
           <span
             v-else
             class="inline-block bg-red-200 rounded-full px-3 py-1 text-sm font-semibold text-red-700 mr-2"
           >已打烊</span>
-          <span class="inline-block bg-blue-200 rounded-full px-3 py-1 text-sm font-semibold text-blue-700">营业时间：{{ business.businessHours }}</span>
+          <span class="inline-block bg-yellow-200 rounded-full px-3 py-1 text-sm font-semibold text-yellow-700 mb-2">{{ business.review_count }} reviews</span>
+
         </div>
       </div>
       <div class="flex flex-col items-end">
-        <span class="block bg-yellow-200 rounded-full px-3 py-1 text-sm font-semibold text-yellow-700 mb-2">{{ business.reviewsCount }} 评论</span>
-        <span class="flex bg-indigo-200 rounded-full px-3 py-1 text-sm font-semibold text-indigo-700 items-center">
+        <span class="flex bg-indigo-200 rounded-full px-3 py-1 text-xl font-semibold text-indigo-700 items-center">
           <svg
             width="16"
             height="20"
@@ -35,16 +38,20 @@
           {{ business.rating }}
         </span>
       </div>
-
     </div>
-    <div class="px-6 pb-2">
-      <h3 class="text-lg mb-2">特色:</h3>
-      <ul>
+    <div class="px-6 py-2">
+      <div class="font-bold mb-2">Categories: </div>
+      <div>{{ business.categories }}</div>
+    </div>
+    <div class="px-6 py-2">
+      <div class="font-bold mb-2">营业时间</div>
+      <ul class="list-disc pl-5">
         <li
-          v-for="(feature, index) in business.features"
-          :key="index"
-          class="text-gray-600 text-sm list-disc ml-4"
-        >{{ feature }}</li>
+          v-for="(time, day) in formattedBusinessHours"
+          :key="day"
+        >
+          {{ day }}: {{ time }}
+        </li>
       </ul>
     </div>
   </div>
@@ -56,6 +63,30 @@ export default {
     business: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    formattedBusinessHours() {
+      const { hours } = this.business;
+      const formatted = {};
+      Object.keys(hours).forEach((day) => {
+        const time = hours[day];
+        if (time === '0:0-0:0') {
+          formatted[day] = '休息';
+        } else {
+          const [start, end] = time.split('-');
+          const formattedStart = this.formatTime(start);
+          const formattedEnd = this.formatTime(end);
+          formatted[day] = `${formattedStart} - ${formattedEnd}`;
+        }
+      });
+      return formatted;
+    },
+  },
+  methods: {
+    formatTime(time) {
+      const [hours, minutes] = time.split(':');
+      return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
     },
   },
 };

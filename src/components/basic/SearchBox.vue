@@ -96,7 +96,7 @@
     </div>
     <div
       class="h-80 overflow-auto"
-      style="height: 400px; overflow-y: auto;"
+      style="height: 600px; overflow-y: auto;"
     >
       <List v-if="businesses">
         <ListItem
@@ -125,7 +125,7 @@ export default {
     return {
       latitude: '',
       longitude: '',
-      selectedCity: null,
+      selectedCity: undefined,
       cities: [
         { value: 'beijing', label: 'Beijing' },
         { value: 'shanghai', label: 'Shanghai' },
