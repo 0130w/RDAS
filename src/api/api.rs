@@ -24,7 +24,7 @@ pub async fn get_user_info(req: HttpRequest) -> impl Responder {
     match decode_token(token) {
         Ok(claims) => {
             let username = claims.sub;
-            let users: Vec<UserInfoData> = parse_json("../../dataset/userinfo.json");
+            let users: Vec<UserInfoData> = parse_json("dataset/userinfo.json");
             let user = users.into_iter().find(|user| user.username == username);
             match user {
                 Some(user_info) => HttpResponse::Ok().json(user_info),
@@ -51,7 +51,7 @@ pub async fn logout(_token: String) -> impl Responder {
 
 #[post("/user/recommendByHistory")]
 pub async fn recommend_by_history(_token: String) -> impl Responder {
-    let business_with_grade_score: Vec<BusinessWithGradeScore> = parse_json("../../dataset/epic8_task1.json");
+    let business_with_grade_score: Vec<BusinessWithGradeScore> = parse_json("dataset/epic8_task1.json");
     match serde_json::to_value(&business_with_grade_score) {
         Ok(json_data) => HttpResponse::Ok().json(json_data),
         Err(e) => HttpResponse::InternalServerError().body(format!("Error converting to json : {}", e))
