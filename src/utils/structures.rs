@@ -12,21 +12,26 @@ pub struct Position {
     pub longitude: f64
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Deserialize)]
+pub struct BusinessQuery {
+    pub business_id : String
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct BusinessInfo {
     pub business_id: String,
     pub name: String,
     pub address: String,
     pub city: String,
     pub state: String,
-    pub postal_code: String,
+    pub postal_code: Option<String>,
     pub latitude: f64,
     pub longitude: f64,
     pub stars: f32,
     pub review_count: u32,
     pub is_open: u8,
     pub attributes: Option<HashMap<String, String>>,
-    pub categories: String,
+    pub categories: Option<String>,
     pub hours: Option<HashMap<String, String>>
 }
 

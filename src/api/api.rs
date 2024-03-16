@@ -1,9 +1,9 @@
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::{fs::File, io::{BufRead, BufReader}, path::Path, time::{SystemTime, UNIX_EPOCH}};
 
-use actix_web::{get, post, web::Json, HttpRequest, HttpResponse, Responder};
+use actix_web::{get, post, web::{self, Json}, HttpRequest, HttpResponse, Responder};
 use jsonwebtoken::{ decode, encode, errors::ErrorKind, DecodingKey, EncodingKey, Header, Validation};
-use serde_json::Value;
-use crate::utils::{parser::parse_json, structures::{BusinessWithGradeScore, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, UserInfoData}};
+use serde_json::{from_str, Value};
+use crate::utils::{parser::parse_json, structures::{BusinessInfo, BusinessQuery, BusinessWithGradeScore, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, UserInfoData}};
 
 #[post("/user/login")]
 pub async fn login(login_info: Json<LoginRequest>) -> impl Responder {
@@ -67,7 +67,7 @@ pub async fn search_for_business(_latitude: String, _longitude: String, _city: S
 pub async fn recommend_by_history(_token: String) -> impl Responder {
     let business_with_grade_score: Vec<BusinessWithGradeScore> = parse_json("dataset/epic8_task1.json");
     match serde_json::to_value(&business_with_grade_score) {
-        Ok(json_data) => HttpResponse::Ok().json(Response::<Value>{
+        Ok(json_data) => HttpResponse::Ok().json(Response::<Value> {
             code: 200,
             data: Some(json_data)
         }),
@@ -75,10 +75,36 @@ pub async fn recommend_by_history(_token: String) -> impl Responder {
     }
 }
 
-// #[get("/user/getBusinessInfo")]
-// pub async fn get_business_info(business_id: String) -> impl Responder {
-
-// }
+#[get("/business/getBusinessInfo")]
+pub async fn get_business_info(query: web::Query<BusinessQuery>) -> impl Responder {
+    let business_id = query.business_id.to_string();
+    let mut businesses : Vec<BusinessInfo> = Vec::new();
+    let file = File::open(Path::new("dataset/business.json")).expect("Unable to open file");
+    let reader = BufReader::new(file);
+    for line in reader.lines() {
+        let line = line.expect("Unable to read line");
+        let item : BusinessInfo = from_str(&line).expect("Failed to parse json");
+        businesses.push(item);
+    }
+    let mut target : Option<BusinessInfo> = None;
+    println!("business_id = {}", business_id);
+    for business in businesses {
+        if business_id == business.business_id {
+            target = Some(business)
+        }
+    }
+    match target {
+        Some(business) => {
+            HttpResponse::Ok().json(Response::<BusinessInfo> {
+                code: 200,
+                data: Some(business)
+            })
+        },
+        None => {
+            HttpResponse::InternalServerError().body(format!("Error converting to json."))
+        }
+    }
+}
 
 // #[get("/user/friendRecommend")]
 // pub async fn friend_recommend(user_id: String) -> impl Responder {
