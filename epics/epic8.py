@@ -1,5 +1,5 @@
 from typing import Tuple
-
+import numpy as np
 from pyspark.ml.feature import Tokenizer, IDF, HashingTF
 from pyspark.sql import SparkSession
 from pyspark.sql.dataframe import DataFrame
@@ -133,6 +133,7 @@ def epic8_task2(business_id: str, review_df: DataFrame, tip_df: DataFrame) -> Tu
         df = df.withColumn('sentiment', sentiments.analyze_sentiment(col('text')))
         df = df.withColumn('keywords', extract_keywords_udf(col('text')))
         return df
+
     # Do sentiment analysis with review and tip text
     review_df = sentiment_analysis(review_df)
     tip_df = sentiment_analysis(tip_df)
@@ -149,7 +150,7 @@ def epic8_task2(business_id: str, review_df: DataFrame, tip_df: DataFrame) -> Tu
 def epic8_task3(user_id: str, review_df: DataFrame,
                 tip_df: DataFrame, user_df: DataFrame, n_recommendations: int = 6) -> list:
     """ Suggest potential friends based on user spending and reviews
-    Parameters:
+    Parameters:z
         user_id (str): user id
         review_df (DataFrame): dataframe read from review json
         tip_df (DataFrame): dataframe read from tip json
@@ -162,22 +163,24 @@ def epic8_task3(user_id: str, review_df: DataFrame,
     user_tips = tip_df.filter(tip_df['user_id'] == user_id).select('text')
     user_data = user_reviews.union(user_tips).withColumnRenamed('text', 'user_text')
 
-    # randomly get 20 users from user_df
-    other_users = user_df.filter(user_df['user_id'] != user_id).sample(False, 0.1).limit(20)
+    # Reduce the number of other users to consider by applying some criteria
+    other_users = user_df.filter(user_df['user_id'] != user_id) \
+        .sample(False, 0.01) \
+        .limit(100)  # Adjust the sampling fraction and limit as needed
     other_user_ids = [row['user_id'] for row in other_users.collect()]
 
-    # tokenize the texts
+    # Tokenize the texts
     tokenizer = Tokenizer(inputCol="user_text", outputCol="words")
     user_words = tokenizer.transform(user_data)
 
-    # calculate tf-idf
+    # Calculate tf-idf
     hashing_tf = HashingTF(inputCol="words", outputCol="rawFeatures")
     featured_data = hashing_tf.transform(user_words)
     idf = IDF(inputCol="rawFeatures", outputCol="features")
     idf_model = idf.fit(featured_data)
     user_features = idf_model.transform(featured_data)
 
-    # store similarity and user_id
+    # Store similarity and user_id
     similarities = []
 
     for other_user in other_user_ids:
@@ -188,12 +191,12 @@ def epic8_task3(user_id: str, review_df: DataFrame,
         other_featured_data = hashing_tf.transform(other_words)
         other_features = idf_model.transform(other_featured_data)
 
-        other_features = other_features.withColumnRenamed('features', 'other_features')
-
-        # get cosine_similarity
-        sim = user_features.crossJoin(other_features) \
-            .select(similarity.cosine_similarity_udf("features", "other_features").alias("similarity")) \
-            .collect()[0]["similarity"]
+        # Calculate cosine similarity
+        dot_product = np.dot(user_features.collect()[0]['features'].toArray(),
+                             other_features.collect()[0]['features'].toArray())
+        magnitude = np.linalg.norm(user_features.collect()[0]['features'].toArray()) * \
+                    np.linalg.norm(other_features.collect()[0]['features'].toArray())
+        sim = dot_product / magnitude if magnitude != 0 else 0
         similarities.append((other_user, sim))
 
     similarities.sort(key=lambda x: x[1], reverse=True)
