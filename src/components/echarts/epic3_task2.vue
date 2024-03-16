@@ -94,13 +94,13 @@ export default {
         ],
         2019: [
           // 不同的数据
-          { value: 200, name: '有用' },
+          { value: 500, name: '有用' },
           { value: 735, name: '有趣' },
           { value: 580, name: '酷' },
         ],
         2018: [
           // 不同的数据
-          { value: 100, name: '有用' },
+          { value: 400, name: '有用' },
           { value: 735, name: '有趣' },
           { value: 580, name: '酷' },
         ],

@@ -28,7 +28,7 @@ service.interceptors.request.use(
     const token = getToken();
     // 如果存在 token，则在请求头中添加 Authorization 字段
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `${token}`;
     }
     return config;
   },

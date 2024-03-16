@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           resetRouter();
-          const { permissions } = await store.dispatch('user/getUserInfo', getToken());
+          const { permissions } = await store.dispatch('user/getUserInfo');
           console.log(store.state.user.permissions);
           console.log(getToken());
           const accessedRoutes = await store.dispatch('auth/generateRoutes', permissions);

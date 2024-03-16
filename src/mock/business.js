@@ -23,7 +23,7 @@ export default {
   Suggestion: {
     code: 200,
     data: {
-      suggestionText: 'Hello World!',
+      suggestionText: 'The review describes a negative experience at Beth-El, highlighting issues like an unexpectedly short and altered Friday service, which omitted important prayers, and a response from leadership that suggested a lack of understanding of religious practices. Additionally, a personal and slanderous response from the Cantor to a volunteer offer, coupled with ineffective follow-up by the membership administrator, is mentioned. This led the reviewer to advise newcomers to avoid Beth-El and seek out other congregations, eventually finding a more welcoming and engaging synagogue elsewhere in St. Pete. The sentiments reflect disappointment and frustration with Beth-El atmosphere and leadership, contrasting sharply with the positive experience found at another synagogue, characterized by a scholarly and personable Rabbi, a fantastic Cantor, and a welcoming congregation.',
     },
   },
 };

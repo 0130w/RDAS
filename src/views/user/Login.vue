@@ -114,8 +114,8 @@ export default {
     console.log(process.env.VUE_APP_BASE_API);
     // MOCK: 模拟登录，页面加载时自动填写账号
     this.form.setFieldsValue({
-      username: 'admin@magic.com',
-      password: 'magic123456',
+      username: 'zyx@123.com',
+      password: '123456',
     });
   },
 

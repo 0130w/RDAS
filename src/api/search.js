@@ -15,7 +15,7 @@ export function searchForBusiness(params) {
 export function recommendByHistory(params) {
   return request({
     url: '/user/recommendByHistory',
-    method: 'get',
+    method: 'post',
     params,
   });
 }
