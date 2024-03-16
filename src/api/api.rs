@@ -1,3 +1,5 @@
+use std::time::{SystemTime, UNIX_EPOCH};
+
 use actix_web::{get, post, web::Json, HttpRequest, HttpResponse, Responder};
 use jsonwebtoken::{ decode, encode, errors::ErrorKind, DecodingKey, EncodingKey, Header, Validation};
 use crate::utils::{parser::parse_json, structures::{BusinessWithGradeScore, Claims, LoginData, LoginRequest, Response, UserInfoData}};
@@ -78,7 +80,8 @@ fn decode_token(token: &str) -> Result<Claims, String> {
 }
 
 fn generate_token(username: &str) -> String {
-    let expiration = 60 * 60;
+    let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
+    let expiration = now + 60 * 60;
     let claims = Claims {
         sub: username.to_owned(),
         exp: expiration
