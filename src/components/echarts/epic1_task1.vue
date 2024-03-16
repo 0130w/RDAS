@@ -21,7 +21,7 @@ export default {
       const option = {
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          data: ['Starbucks', "McDonald's", "Dunkin'", 'Subway', 'Taco Bell', 'CVS Pharmacy', 'Walgreens', 'Burger King', "Wendy's", 'Wawa', "Domino's Pizza", 'The UPS Store', 'Pizza Hut', 'Enterprise Rent-A-Car', "Papa John's Pizza", 'Great Clips', "Jimmy John's", 'US Post Office', 'KFC', 'Chick-fil-A'],
           axisLabel: {
             rotate: 90, // 旋转角度
           },
@@ -33,7 +33,7 @@ export default {
         },
         series: [
           {
-            data: [120, 200, 150, 80, 70, 120, 200, 150, 80, 70, 120, 200, 150, 80, 70, 120, 200, 150, 80, 70],
+            data: [724, 703, 510, 459, 365, 345, 341, 338, 331, 307, 295, 281, 272, 232, 196, 185, 175, 174, 171, 162],
             type: 'bar',
             label: {
               show: true, // 显示标签

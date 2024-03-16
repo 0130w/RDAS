@@ -18,7 +18,25 @@ export default {
       const myChart = this.$echarts.init(document.getElementById('myChart'));
 
       // 原始柱状图数据
-      const barData = [120, 200, 150, 80, 70];
+      const barData = [90,
+        937,
+        5423,
+        15340,
+        31097,
+        64911,
+        109054,
+        176435,
+        195955,
+        209762,
+        233465,
+        247850,
+        217620,
+        151024,
+        133568,
+        104655,
+        47444,
+        40485,
+        2782];
 
       // 计算增长率
       const growthRate = barData.map((item, index, array) => {
@@ -47,7 +65,25 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          data: [2004,
+            2005,
+            2006,
+            2007,
+            2008,
+            2009,
+            2010,
+            2011,
+            2012,
+            2013,
+            2014,
+            2015,
+            2016,
+            2017,
+            2018,
+            2019,
+            2020,
+            2021,
+            2022],
           axisLabel: {
             rotate: 90, // 旋转角度
           },

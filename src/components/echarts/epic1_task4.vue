@@ -37,7 +37,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            data: ['Starbucks', "McDonald's", "Dunkin'", 'Subway', 'Taco Bell', 'CVS Pharmacy', 'Walgreens', 'Burger King', "Wendy's", 'Wawa', "Domino's Pizza", 'The UPS Store', 'Pizza Hut', 'Enterprise Rent-A-Car', "Papa John's Pizza", 'Great Clips', "Jimmy John's", 'US Post Office', 'KFC', 'Chick-fil-A'],
             axisPointer: {
               type: 'shadow',
             },
@@ -70,7 +70,7 @@ export default {
           {
             name: '数量',
             type: 'bar',
-            data: [120, 200, 150, 80, 70, 120, 200, 150, 80, 70],
+            data: [724, 703, 510, 459, 365, 345, 341, 338, 331, 307, 295, 281, 272, 232, 196, 185, 175, 174, 171, 162],
             label: {
               show: true, // 显示标签
               position: 'top', // 标签的位置
@@ -81,7 +81,7 @@ export default {
             name: '评分',
             type: 'bar',
             yAxisIndex: 1, // 使用次要维度的y轴
-            data: [2.3, 1.8, 3.2, 2.6, 2.4, 2.7, 1.7, 3.1, 2.9, 1.6],
+            data: [3.126381215469613, 1.8634423897581793, 2.302941176470588, 2.5860566448801743, 2.154794520547945, 2.4565217391304346, 2.624633431085044, 2.0281065088757395, 2.015105740181269, 3.3192182410423454, 2.2813559322033896, 3.215302491103203, 2.0330882352941178, 3.2780172413793105, 2.4081632653061225, 2.9, 2.8685714285714288, 2.4195402298850577, 1.8596491228070176, 3.3858024691358026],
             label: {
               show: true, // 显示标签
               position: 'top', // 标签的位置

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-// 统计不同类型（中国菜、美式、墨西哥）的餐厅的评论数量
+// 统计不同类型（中国菜、美式、墨西哥）的餐厅类型及数量
 export default {
   // 钩子函数
   mounted() {
@@ -19,28 +19,44 @@ export default {
       const myChart = this.$echarts.init(document.getElementById('myChart'));
       // 绘制图表
       const option = {
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed'],
-          axisLabel: {
-            rotate: 90, // 旋转角度
+        tooltip: {
+          trigger: 'item',
+        },
+        legend: {
+          top: '5%',
+          left: 'center',
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            padAngle: 5,
+            itemStyle: {
+              borderRadius: 10,
+            },
+            label: {
+              show: false,
+              position: 'center',
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 40,
+                fontWeight: 'bold',
+              },
+            },
+            labelLine: {
+              show: false,
+            },
+            data: [
+              { value: 1591128, name: 'American' },
+              { value: 417489, name: 'Mexican' },
+              { value: 199985, name: 'Chinese' },
+            ],
           },
-          name: '种类',
-        },
-        yAxis: {
-          type: 'value',
-          name: '数量',
-        },
-        series:
-        {
-          data: [120, 200, 150],
-          type: 'bar',
-          label: {
-            show: true, // 显示标签
-            position: 'top', // 标签的位置
-            // 可以添加更多样式配置，如字体大小、颜色等
-          },
-        },
+        ],
       };
       // 设置option
       myChart.setOption(option);

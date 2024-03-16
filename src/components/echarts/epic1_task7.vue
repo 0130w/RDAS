@@ -21,7 +21,7 @@ export default {
       const option = {
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          data: ['Beauty & Spas, Nail Salons', 'Restaurants, Pizza', 'Nail Salons, Beauty & Spas', 'Pizza, Restaurants', 'Restaurants, Mexican', 'Restaurants, Chinese', 'Mexican, Restaurants', 'Chinese, Restaurants', 'Food, Coffee & Tea', 'Beauty & Spas, Hair Salons'],
           axisLabel: {
             rotate: 90, // 旋转角度
           },
@@ -33,7 +33,7 @@ export default {
         },
         series: [
           {
-            data: [120, 200, 150, 80, 70, 120, 200, 150, 80, 70],
+            data: [1012, 935, 934, 823, 728, 708, 672, 651, 508, 493],
             type: 'bar',
             label: {
               show: true, // 显示标签
