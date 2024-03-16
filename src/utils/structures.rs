@@ -96,9 +96,12 @@ pub struct BusinessAfterFilterInfo {
     pub business_id: String,
     pub name: String,
     pub is_open: i32,
-    pub stars: i32,
+    pub stars: f32,
     pub city: String,
     pub address: String,
     pub distance: String,
     pub categories: String
 }
+
+#[derive(Serialize, Deserialize)]
+pub struct BusinessesAfterFilterInfo(Vec<BusinessAfterFilterInfo>);

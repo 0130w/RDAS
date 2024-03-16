@@ -3,7 +3,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use actix_web::{get, post, web::Json, HttpRequest, HttpResponse, Responder};
 use jsonwebtoken::{ decode, encode, errors::ErrorKind, DecodingKey, EncodingKey, Header, Validation};
 use serde_json::Value;
-use crate::utils::{parser::parse_json, structures::{BusinessAfterFilterInfo, BusinessWithGradeScore, Claims, LoginData, LoginRequest, Response, UserInfoData}};
+use crate::utils::{parser::parse_json, structures::{BusinessWithGradeScore, BusinessesAfterFilterInfo, Claims, LoginData, LoginRequest, Response, UserInfoData}};
 
 #[post("/user/login")]
 pub async fn login(login_info: Json<LoginRequest>) -> impl Responder {
@@ -50,7 +50,7 @@ pub async fn logout(_token: String) -> impl Responder {
 
 #[get("/user/searchForBusiness")]
 pub async fn search_for_business(_latitude: String, _longitude: String, _city: String, _choice: String, _options: String) -> impl Responder {
-    let business_with_filter : Vec<BusinessAfterFilterInfo> = parse_json("dataset/epic7_task3.json");
+    let business_with_filter : Vec<BusinessesAfterFilterInfo> = parse_json("dataset/epic7_task3.json");
     match serde_json::to_value(&business_with_filter) {
         Ok(json_data) => HttpResponse::Ok().json(Response::<Value>{
             code: 200,
