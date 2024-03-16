@@ -16,48 +16,8 @@ export default {
     draw() {
       // 初始化echarts实例
       const myChart = this.$echarts.init(document.getElementById('myChart'));
-
-      // 原始柱状图数据
-      const barData = [2,
-        28375,
-        21836,
-        14548,
-        12350,
-        10420,
-        9952,
-        8487,
-        7108,
-        6351,
-        5828,
-        3603,
-        3002,
-        68];
-
-      // 计算增长率
-      const growthRate = barData.map((item, index, array) => {
-        if (index === 0) return 0; // 第一个元素没有前一个元素，所以增长率为0
-        return ((item - array[index - 1]) / array[index - 1]) * 100; // 当前元素相对于前一个元素的增长率
-      });
-
       // 绘制图表
       const option = {
-        tooltip: {
-          trigger: 'axis',
-          // 显示增长率的百分比格式
-          formatter(params) {
-            let result = `${params[0].name}<br/>`;
-            params.forEach((item) => {
-              if (item.seriesType === 'line') {
-                // 对于折线图（增长率），显示百分比
-                result += `${item.marker} ${item.seriesName}: ${item.value.toFixed(2)}%<br/>`;
-              } else {
-                // 对于其他类型（柱状图），显示原始值
-                result += `${item.marker} ${item.seriesName}: ${item.value}<br/>`;
-              }
-            });
-            return result;
-          },
-        },
         xAxis: {
           type: 'category',
           data: [2009,
@@ -81,12 +41,24 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: '数量/增长率 (%)',
+          name: '数量',
         },
         series: [
           {
-            name: '数量',
-            data: barData,
+            data: [2,
+              28375,
+              21836,
+              14548,
+              12350,
+              10420,
+              9952,
+              8487,
+              7108,
+              6351,
+              5828,
+              3603,
+              3002,
+              68],
             type: 'bar',
             label: {
               show: true, // 显示标签
@@ -94,18 +66,40 @@ export default {
               // 可以添加更多样式配置，如字体大小、颜色等
             },
           },
+          // 添加的折线图配置
           {
-            name: '增长率',
-            data: growthRate,
-            type: 'line', // 添加折线图系列
-            smooth: true, // 可以设置为true使折线平滑
+            data: [2,
+              28375,
+              21836,
+              14548,
+              12350,
+              10420,
+              9952,
+              8487,
+              7108,
+              6351,
+              5828,
+              3603,
+              3002,
+              68],
+            type: 'line',
+            smooth: true, // 可选，让折线平滑
+            itemStyle: {
+              color: 'red', // 折线颜色
+            },
+            lineStyle: {
+              width: 2, // 线条宽度
+            },
+            symbol: 'circle', // 标记的形状
+            symbolSize: 8, // 标记的大小
+            showSymbol: true, // 是否显示标记
           },
         ],
       };
-
       // 设置option
       myChart.setOption(option);
     },
+
   },
 };
 

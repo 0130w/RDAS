@@ -21,7 +21,7 @@ export default {
       const option = {
         xAxis: {
           type: 'category',
-          data: ['AB Edmonton', 'Bucks', 'Harleysville', 'MARLTON', 'Merion Park', 'St.Pete Beach', 'TAMPA AP', 'Westampton', 'Worcester', 'Chestnut Hill'],
+          data: ['AB Edmonton', 'MARLTON', 'Chestnut Hill', 'Bucks', 'Merion Park', 'St.Pete Beach', 'Worcester', 'Harleysville', 'Westampton', 'TAMPA AP'],
           axisLabel: {
             rotate: 90, // 旋转角度
           },
@@ -33,7 +33,7 @@ export default {
         },
         series: [
           {
-            data: [4.5, 4.0625, 3.38265306122449, 4.5, 3.5, 3.5, 2.0, 2.9166666666666665, 3.5625, 4.5],
+            data: [4.5, 4.5, 4.5, 4.0625, 3.5, 3.5, 3.5625, 3.38265306122449, 2.9166666666666665, 2.0],
             type: 'bar',
             label: {
               show: true, // 显示标签
