@@ -3,7 +3,7 @@ use std::{fs::File, io::{BufRead, BufReader}, path::Path, time::{SystemTime, UNI
 use actix_web::{get, post, web::{self, Json}, HttpRequest, HttpResponse, Responder};
 use jsonwebtoken::{ decode, encode, errors::ErrorKind, DecodingKey, EncodingKey, Header, Validation};
 use serde_json::{from_str, Value};
-use crate::utils::{parser::parse_json, structures::{BusinessInfo, BusinessQuery, BusinessResponse, BusinessWithGradeScore, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, UserInfoData}};
+use crate::utils::{parser::parse_json, structures::{BusinessAfterFilterInfo, BusinessInfo, BusinessQuery, BusinessResponse, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, UserInfoData}};
 
 #[post("/user/login")]
 pub async fn login(login_info: Json<LoginRequest>) -> impl Responder {
@@ -40,7 +40,7 @@ pub async fn get_user_info(req: HttpRequest) -> impl Responder {
 }
 
 #[post("/user/logout")]
-pub async fn logout(_token: String) -> impl Responder {
+pub async fn logout() -> impl Responder {
     // TODO maintain expired token
     HttpResponse::Ok().json( Response::<()> {
         code: 200,
@@ -64,8 +64,8 @@ pub async fn search_for_business(_latitude: String, _longitude: String, _city: S
 
 
 #[get("/user/recommendByHistory")]
-pub async fn recommend_by_history(_token: String) -> impl Responder {
-    let business_with_grade_score: Vec<BusinessWithGradeScore> = parse_json("dataset/epic8_task1.json");
+pub async fn recommend_by_history() -> impl Responder {
+    let business_with_grade_score: Vec<BusinessAfterFilterInfo> = parse_json("dataset/epic8_task1.json");
     match serde_json::to_value(&business_with_grade_score) {
         Ok(json_data) => HttpResponse::Ok().json(Response::<Value> {
             code: 200,
@@ -109,7 +109,7 @@ pub async fn get_business_info(query: web::Query<BusinessQuery>) -> impl Respond
 
 // #[get("/user/friendRecommend")]
 // pub async fn friend_recommend(user_id: String) -> impl Responder {
-//     // epic8 task3
+    
 // }
 
 fn decode_token(token: &str) -> Result<Claims, String> {

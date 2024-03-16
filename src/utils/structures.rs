@@ -95,11 +95,6 @@ pub struct LoginRequest {
     pub password: String
 }
 
-#[derive(Serialize, Deserialize)]
-pub struct BusinessWithGradeScore {
-    pub business_id: String,
-    pub grade_score: f64
-}
 
 #[derive(Serialize, Deserialize)]
 pub struct BusinessAfterFilterInfo {
