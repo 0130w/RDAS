@@ -65,9 +65,11 @@ pub async fn search_for_business(_latitude: String, _longitude: String, _city: S
 
 #[get("/user/recommendByHistory")]
 pub async fn recommend_by_history() -> impl Responder {
-    let business_with_grade_score: Vec<BusinessAfterFilterInfo> = parse_json("dataset/epic8_task1.json");
-    match serde_json::to_value(&business_with_grade_score) {
-        Ok(json_data) => HttpResponse::Ok().json(Response::<Value> {
+    let file_contents = std::fs::read_to_string("dataset/epic8_task1.json").unwrap();
+    let business_with_filter: BusinessesWrapper = serde_json::from_str(&file_contents).unwrap();
+    
+    match serde_json::to_value(&business_with_filter) {
+        Ok(json_data) => HttpResponse::Ok().json(Response::<Value>{
             code: 200,
             data: Some(json_data)
         }),
@@ -106,6 +108,11 @@ pub async fn get_business_info(query: web::Query<BusinessQuery>) -> impl Respond
         }
     }
 }
+
+// #[get("/user/getSuggestion")]
+// pub async fn get_suggestion() -> impl Responder {
+
+// }
 
 // #[get("/user/friendRecommend")]
 // pub async fn friend_recommend(user_id: String) -> impl Responder {
