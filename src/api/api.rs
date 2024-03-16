@@ -1,8 +1,8 @@
-use std::{fs::File, io::{BufRead, BufReader}, path::Path, time::{SystemTime, UNIX_EPOCH}};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use actix_web::{get, post, web::{self, Json}, HttpRequest, HttpResponse, Responder};
 use jsonwebtoken::{ decode, encode, errors::ErrorKind, DecodingKey, EncodingKey, Header, Validation};
-use serde_json::{from_str, Value};
+use serde_json::Value;
 use crate::utils::{parser::parse_json, structures::{BusinessAfterFilterInfo, BusinessInfo, BusinessQuery, BusinessResponse, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, SearchParams, Suggestion, UserInfoData}};
 
 #[post("/user/login")]
@@ -81,14 +81,7 @@ pub async fn recommend_by_history() -> impl Responder {
 #[get("/business/getBusinessInfo")]
 pub async fn get_business_info(query: web::Query<BusinessQuery>) -> impl Responder {
     let business_id = query.business_id.to_string();
-    let mut businesses : Vec<BusinessInfo> = Vec::new();
-    let file = File::open(Path::new("dataset/business.json")).expect("Unable to open file");
-    let reader = BufReader::new(file);
-    for line in reader.lines() {
-        let line = line.expect("Unable to read line");
-        let item : BusinessInfo = from_str(&line).expect("Failed to parse json");
-        businesses.push(item);
-    }
+    let businesses : Vec<BusinessInfo> = parse_json("dataset/business.json");
     let mut target : Option<BusinessInfo> = None;
     for business in businesses {
         if business_id == business.business_id {
