@@ -27,7 +27,10 @@ pub async fn get_user_info(req: HttpRequest) -> impl Responder {
             let users: Vec<UserInfoData> = parse_json("dataset/userinfo.json");
             let user = users.into_iter().find(|user| user.info.username == username);
             match user {
-                Some(user_info) => HttpResponse::Ok().json(user_info),
+                Some(user_info) => HttpResponse::Ok().json(Response::<UserInfoData>{
+                    code: 200,
+                    data: Some(user_info)
+                }),
                 None => HttpResponse::BadRequest().body(format!("Unknown user: {}", username)),
             }
         }

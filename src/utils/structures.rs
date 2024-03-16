@@ -68,7 +68,6 @@ pub struct UserInfo {
 
 #[derive(Serialize, Deserialize)]
 pub struct UserInfoData {
-    pub code: i32,
     pub info: UserInfo,
     pub permissions: Vec<String>
 }
