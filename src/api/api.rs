@@ -2,6 +2,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use actix_web::{get, post, web::Json, HttpRequest, HttpResponse, Responder};
 use jsonwebtoken::{ decode, encode, errors::ErrorKind, DecodingKey, EncodingKey, Header, Validation};
+use serde_json::Value;
 use crate::utils::{parser::parse_json, structures::{BusinessWithGradeScore, Claims, LoginData, LoginRequest, Response, UserInfoData}};
 
 #[post("/user/login")]
@@ -56,7 +57,10 @@ pub async fn logout(_token: String) -> impl Responder {
 pub async fn recommend_by_history(_token: String) -> impl Responder {
     let business_with_grade_score: Vec<BusinessWithGradeScore> = parse_json("dataset/epic8_task1.json");
     match serde_json::to_value(&business_with_grade_score) {
-        Ok(json_data) => HttpResponse::Ok().json(json_data),
+        Ok(json_data) => HttpResponse::Ok().json(Response::<Value>{
+            code: 200,
+            data: Some(json_data)
+        }),
         Err(e) => HttpResponse::InternalServerError().body(format!("Error converting to json : {}", e))
     }
 }
