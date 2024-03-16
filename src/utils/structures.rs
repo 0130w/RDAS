@@ -55,14 +55,37 @@ pub struct LoginData {
     pub token: String
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct UserInfo {
+    pub user_id: Option<String>,
+    pub business_id: Option<String>,
+    pub nickname: String,
+    pub role: String,
+    pub avatar: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct UserInfoData {
+    pub username: String,
+    pub password: String,
+    pub user_info: UserInfo,
+    pub permissions: Vec<String>
+}
+
 #[derive(Serialize)]
-pub struct LoginResponse {
+pub struct Response<T: Serialize> {
     pub code: i32,
-    pub data: LoginData
+    pub data: Option<T>
 }
 
 #[derive(Deserialize)]
 pub struct LoginRequest {
     pub username: String,
     pub password: String
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct BusinessWithGradeScore {
+    pub business_id: String,
+    pub grade_score: f64
 }
