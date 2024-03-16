@@ -68,7 +68,7 @@ pub struct UserInfo {
 pub struct UserInfoData {
     pub username: String,
     pub password: String,
-    pub user_info: UserInfo,
+    pub info: UserInfo,
     pub permissions: Vec<String>
 }
 
