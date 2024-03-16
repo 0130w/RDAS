@@ -3,7 +3,7 @@ use std::{fs::File, io::{BufRead, BufReader}, path::Path, time::{SystemTime, UNI
 use actix_web::{get, post, web::{self, Json}, HttpRequest, HttpResponse, Responder};
 use jsonwebtoken::{ decode, encode, errors::ErrorKind, DecodingKey, EncodingKey, Header, Validation};
 use serde_json::{from_str, Value};
-use crate::utils::{parser::parse_json, structures::{BusinessInfo, BusinessQuery, BusinessWithGradeScore, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, UserInfoData}};
+use crate::utils::{parser::parse_json, structures::{BusinessInfo, BusinessQuery, BusinessResponse, BusinessWithGradeScore, BusinessesWrapper, Claims, LoginData, LoginRequest, Response, UserInfoData}};
 
 #[post("/user/login")]
 pub async fn login(login_info: Json<LoginRequest>) -> impl Responder {
@@ -87,7 +87,6 @@ pub async fn get_business_info(query: web::Query<BusinessQuery>) -> impl Respond
         businesses.push(item);
     }
     let mut target : Option<BusinessInfo> = None;
-    println!("business_id = {}", business_id);
     for business in businesses {
         if business_id == business.business_id {
             target = Some(business)
@@ -95,9 +94,11 @@ pub async fn get_business_info(query: web::Query<BusinessQuery>) -> impl Respond
     }
     match target {
         Some(business) => {
-            HttpResponse::Ok().json(Response::<BusinessInfo> {
+            HttpResponse::Ok().json(Response::<BusinessResponse> {
                 code: 200,
-                data: Some(business)
+                data: Some(BusinessResponse {
+                    businessInfo: business
+                })
             })
         },
         None => {

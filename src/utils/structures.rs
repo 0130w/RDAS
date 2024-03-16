@@ -17,6 +17,12 @@ pub struct BusinessQuery {
     pub business_id : String
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+#[allow(non_snake_case)]
+pub struct BusinessResponse {
+    pub businessInfo : BusinessInfo
+}
+
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct BusinessInfo {
     pub business_id: String,
