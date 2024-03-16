@@ -70,16 +70,10 @@ export const asyncRoutes = [
     component: MainLayout,
     children: [
       {
-        path: '/admin/businessAnalysis',
-        name: 'BusinessAnalysis',
-        component: () => import('@/views/admin/BusinessAnalysis.vue'),
-        meta: { title: '商户数据', openKey: 'pages' },
-      },
-      {
-        path: '/admin/userAnalysis',
-        name: 'UserAnalysis',
-        component: () => import('@/views/admin/UserAnalysis.vue'),
-        meta: { title: '用户面板', openKey: 'pages' },
+        path: '/admin/Analytics',
+        name: 'Analytics',
+        component: () => import('@/views/admin/Analytics.vue'),
+        meta: { title: '数据面板', openKey: 'pages' },
       },
     ],
   },

@@ -11,6 +11,7 @@ Mock.mock('/user/friendRecommend', 'get', user.friend);
 Mock.mock('/user/recommendByHistory', 'get', recom.recommend);
 Mock.mock('/user/searchForBusiness', 'get', recom.recommend2);
 Mock.mock('/business/getBusinessInfo', 'get', business.Info);
+Mock.mock('/business/getSuggestion', 'get', business.Suggestion);
 
 Mock.setup({
   timeout: '300-500',

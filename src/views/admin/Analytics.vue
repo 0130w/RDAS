@@ -64,8 +64,8 @@ export default {
     return {
       menuItems: [
         {
-          title: '条形图/折线图',
-          key: 'BarChart',
+          title: '商户分析',
+          key: 'Business Analysis',
           children: [
             { title: '找出美国最常见商户（前20）', key: 'e1t1' },
             { title: '找出美国商户最多的前10个城市', key: 'e1t2' },
@@ -76,11 +76,12 @@ export default {
             { title: '收获五星评论最多的商户（前20）', key: 'e1t8' },
             { title: '统计不同类型（中国菜、美式、墨西哥）的餐厅的评论数量', key: 'e1t10' },
             { title: '统计不同类型（中国菜、美式、墨西哥）的餐厅的评分分布', key: 'e1t11' },
+            { title: '统计不同类型（中国菜、美式、墨西哥）的餐厅的留存量变化', key: 'e1t12' },
           ],
         },
         {
-          title: '饼图，环图',
-          key: 'Doughnut/Pie Chart',
+          title: '用户分析',
+          key: 'User Analysis',
           children: [
             { title: '分析每年加入的用户数量', key: 'e2t1' },
             { title: '统计评论达人', key: 'e2t2' },
@@ -108,6 +109,7 @@ export default {
         e1t8: epic1_task8,
         e1t10: epic1_task10,
         e1t11: epic1_task11,
+        e1t12: epic1_task12,
         e2t1: epic2_task1,
         e2t2: epic2_task2,
         e2t3: epic2_task3,

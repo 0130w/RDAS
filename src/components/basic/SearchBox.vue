@@ -140,10 +140,8 @@ export default {
       ],
       selectAll: false,
       options: [
-        { value: 'option1', label: '选项1' },
-        { value: 'option2', label: '选项2' },
-        { value: 'option3', label: '选项3' },
-        { value: 'option4', label: '选项4' },
+        { value: 'option1', label: '距离 < 3km' },
+        { value: 'option2', label: '评分 > 3' },
       ],
       businesses: [
 
@@ -181,14 +179,20 @@ export default {
     },
     async handleSearch(latitude, longitude, selectedCity) {
       console.log('Searching for:', { latitude, longitude, selectedCity });
-      if (latitude && longitude && selectedCity) { // 确保所有值都已提供
+      // 获取当前选中的choice和options
+      const selectedChoice = this.choices.find((choice) => choice.isActive).value;
+      const selectedOptions = this.selectedItems; // 已经是options的value数组
+
+      if (latitude && longitude && selectedCity) {
         this.loading = true;
         try {
-          // 构建搜索参数
+          // 构建搜索参数，包括latitude, longitude, city, choice以及options
           const searchParams = {
             latitude,
             longitude,
             city: selectedCity,
+            choice: selectedChoice,
+            options: selectedOptions,
           };
           // 发起搜索请求，这里假设你有一个对应的action来处理搜索
           const response = await this.$store.dispatch('searchForBusiness', searchParams);

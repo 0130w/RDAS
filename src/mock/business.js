@@ -20,4 +20,10 @@ export default {
       },
     },
   },
+  Suggestion: {
+    code: 200,
+    data: {
+      suggestionText: 'Hello World!',
+    },
+  },
 };

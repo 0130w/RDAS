@@ -9,12 +9,10 @@
           :key="index"
         >{{ item.name }} - {{ item.detail }}</li>
       </ul>
-      <div
-        v-for="(impact, index) in data.regionalImpacts"
-        :key="`impact-${index}`"
-      >
-        <h2 class="text-xl font-semibold mb-4">{{ impact.title }}</h2>
-        <p>{{ impact.description }}</p>
+      <!-- 由于regionalImpacts现在是对象，我们直接访问其属性而不是遍历 -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4">{{ data.regionalImpacts.title }}</h2>
+        <p>{{ data.regionalImpacts.description }}</p>
       </div>
     </div>
   </div>
@@ -32,5 +30,5 @@ export default {
 };
 </script>
 
-  <style scoped>
+<style scoped>
 </style>

@@ -12,11 +12,13 @@ export default {
     code: 200,
     data: {
       info: {
+        user_id: 'lO1iq-f75hnPNZkTy3Zerg',
+        business_id: 'mpf3x-BjTdTEA3yCZrAYPw',
         nickname: 'zyx',
         role: 'Web 开发者',
         avatar: 'https://portrait.gitee.com/uploads/avatars/user/1608/4826670_chinesee_1578975163.png!avatar200',
       },
-      permissions: ['user'],
+      permissions: ['business'],
     },
   },
 
