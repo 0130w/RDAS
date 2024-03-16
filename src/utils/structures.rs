@@ -57,6 +57,8 @@ pub struct LoginData {
 
 #[derive(Serialize, Deserialize)]
 pub struct UserInfo {
+    pub username: String,
+    pub password: String,
     pub user_id: Option<String>,
     pub business_id: Option<String>,
     pub nickname: String,
@@ -66,8 +68,7 @@ pub struct UserInfo {
 
 #[derive(Serialize, Deserialize)]
 pub struct UserInfoData {
-    pub username: String,
-    pub password: String,
+    pub code: i32,
     pub info: UserInfo,
     pub permissions: Vec<String>
 }
