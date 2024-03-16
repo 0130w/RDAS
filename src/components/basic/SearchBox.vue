@@ -7,7 +7,6 @@
         class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-1/4 appearance-none leading-normal"
         placeholder="Latitude"
         v-model="latitude"
-        @input="handleLatitudeInput"
       />
       <!-- 经度输入框 -->
       <input
@@ -15,7 +14,6 @@
         class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-1/4 appearance-none leading-normal"
         placeholder="Longitude"
         v-model="longitude"
-        @input="handleLongitudeInput"
       />
       <!-- 城市下拉选项 -->
       <a-select
@@ -100,7 +98,7 @@
     >
       <List v-if="businesses">
         <ListItem
-          v-for="business in businesses"
+          v-for="business in filteredBusinesses"
           :key="business.id"
           :business="business"
           @select-business="handleSelectBusiness"
@@ -123,12 +121,20 @@ export default {
   },
   data() {
     return {
-      latitude: '',
-      longitude: '',
-      selectedCity: undefined,
+      latitude: '34.4266787',
+      longitude: '-119.7111968',
+      selectedCity: 'Santa Barbara',
       cities: [
-        { value: 'beijing', label: 'Beijing' },
-        { value: 'shanghai', label: 'Shanghai' },
+        { value: 'Santa Barbara', label: 'Santa Barbara' },
+        { value: 'Philadelphia', label: 'Philadelphia' },
+        { value: 'Green Lane', label: 'Green Lane' },
+        { value: 'Ashland City', label: 'Ashland City' },
+        { value: 'Brentwood Point', label: 'Brentwood Point' },
+        { value: 'St. Petersburg', label: 'St. Petersburg' },
+        { value: 'Affton', label: 'Affton' },
+        { value: 'Nashville', label: 'Nashville' },
+        { value: 'Land O\'Lakes', label: 'Land O\'Lakes' },
+        { value: 'Largo', label: 'Largo' },
         // 更多城市...
       ],
       selectedItems: [],
@@ -140,8 +146,9 @@ export default {
       ],
       selectAll: false,
       options: [
-        { value: 'option1', label: '距离 < 3km' },
+        { value: 'option1', label: '距离 < 0.5km' },
         { value: 'option2', label: '评分 > 3' },
+        { value: 'option3', label: '正在营业' },
       ],
       businesses: [
 
@@ -149,19 +156,35 @@ export default {
     };
   },
   mounted() {
-    // Axios.get('/user/recommendByHistory')
-    //   .then((response) => {
-    //     this.businesses = response.data.data.businesses;
-    //   });
     this.recommendByHistory();
   },
+  computed: {
+    // 使用计算属性来根据筛选条件过滤businesses列表
+    filteredBusinesses() {
+      return this.businesses.filter((business) => {
+        // 根据selectedItems中的值进行筛选
+        let conditionsMet = true; // 假设所有条件都满足
+
+        if (this.selectedItems.includes('option1')) {
+          // 将distance字符串转换为数值
+          const distance = parseFloat(business.distance);
+          // 检查距离是否小于0.5km
+          conditionsMet = conditionsMet && distance < 0.5;
+        }
+        if (this.selectedItems.includes('option2')) {
+          // 如果选中“评分 > 3”
+          conditionsMet = conditionsMet && business.stars > 3;
+        }
+        if (this.selectedItems.includes('option3')) {
+          // 如果选中“正在营业”
+          conditionsMet = conditionsMet && business.is_open;
+        }
+
+        return conditionsMet; // 只返回满足所有选中条件的business对象
+      });
+    },
+  },
   methods: {
-    handleLatitudeInput() {
-      // 处理纬度输入
-    },
-    handleLongitudeInput() {
-      // 处理经度输入
-    },
     handleCityChange(value) {
       // 处理城市选择
       console.log('Selected city:', value);
@@ -179,20 +202,17 @@ export default {
     },
     async handleSearch(latitude, longitude, selectedCity) {
       console.log('Searching for:', { latitude, longitude, selectedCity });
-      // 获取当前选中的choice和options
+      // 获取当前选中的choice
       const selectedChoice = this.choices.find((choice) => choice.isActive).value;
-      const selectedOptions = this.selectedItems; // 已经是options的value数组
-
       if (latitude && longitude && selectedCity) {
         this.loading = true;
         try {
-          // 构建搜索参数，包括latitude, longitude, city, choice以及options
+          // 构建搜索参数，包括latitude, longitude, city, choice
           const searchParams = {
             latitude,
             longitude,
             city: selectedCity,
             choice: selectedChoice,
-            options: selectedOptions,
           };
           // 发起搜索请求，这里假设你有一个对应的action来处理搜索
           const response = await this.$store.dispatch('searchForBusiness', searchParams);
@@ -213,6 +233,14 @@ export default {
         this.$message.error('请完整填写搜索条件');
       }
     },
+    toggleItem(value) {
+      const index = this.selectedItems.indexOf(value);
+      if (index !== -1) {
+        this.selectedItems.splice(index, 1); // 如果找到，则移除
+      } else {
+        this.selectedItems.push(value); // 否则添加到selectedItems中
+      }
+    },
     toggleSelectAll() {
       if (this.selectAll) {
         this.selectedItems = this.options.map((option) => option.value);
@@ -222,13 +250,6 @@ export default {
     },
     isChecked(value) {
       return this.selectedItems.includes(value);
-    },
-    toggleItem(value) {
-      if (this.selectedItems.includes(value)) {
-        this.selectedItems = this.selectedItems.filter((item) => item !== value);
-      } else {
-        this.selectedItems.push(value);
-      }
     },
     changeChoice(clickedChoice) {
       this.activeChoice = clickedChoice.value;
@@ -244,6 +265,8 @@ export default {
           console.log(choice.label, choice.isActive);
         }
       });
+      // 在切换选项后自动执行搜索
+      this.handleSearch(this.latitude, this.longitude, this.selectedCity);
     },
     handleSelectBusiness(businessId) {
       this.$emit('select-business', businessId);

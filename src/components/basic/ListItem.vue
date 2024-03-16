@@ -69,7 +69,7 @@
                   r="1"
                 />
               </svg>
-              {{ business.distance }}
+              {{ formattedDistance }}km
             </dd>
           </div>
           <div class="flex-none w-full mt-2 font-normal truncate">
@@ -88,6 +88,12 @@ export default {
     business: {
       type: Object,
       default: () => ({}),
+    },
+  },
+  computed: {
+    formattedDistance() {
+      if (!this.business.distance) return '0.0';
+      return parseFloat(this.business.distance).toFixed(1);
     },
   },
   methods: {

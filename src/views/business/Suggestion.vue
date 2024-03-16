@@ -12,7 +12,7 @@
     </div>
 
     <!-- 右侧内容 -->
-    <div class="w-3/5 p-4">
+    <div class="w-4/5 p-4">
       <div class="bg-gray-200 h-full p-4 rounded-lg">
         <SuggestionCardVue :data="SuggestionData" />
       </div>
@@ -23,7 +23,7 @@
 <script>
 import SuggestionCardVue from '@comp/basic/SuggestionCard.vue';
 import BusinessCard from '@comp/basic/BusinessCard.vue';
-import { getBusinessInfo, getSuggestion } from '@/api/business.js';
+import { getBusinessInfo, getSuggestion } from '@/api/business';
 
 export default {
   components: {
@@ -53,19 +53,19 @@ export default {
   },
   methods: {
     async getBusinessInfo() {
-      const businessId = this.info.business_id;
+      const { business_id } = this.info;
       try {
-        const response = await getBusinessInfo(businessId);
-        this.businessInfo = response.data.data.businessInfo;
+        const response = await getBusinessInfo({ business_id });
+        this.businessInfo = response.data.businessInfo;
+        console.log('商户信息:', this.businessInfo);
       } catch (error) {
         console.error('获取商户信息失败:', error);
       }
     },
     async getSuggestion() {
-      const businessId = this.info.business_id;
       try {
-        const response = await getSuggestion(businessId);
-        this.SuggestionData.regionalImpacts.description = response.data.data.suggestionText;
+        const response = await getSuggestion();
+        this.SuggestionData.regionalImpacts.description = response.data.suggestionText;
       } catch (error) {
         console.error('获取商户经营建议失败:', error);
       }
@@ -73,7 +73,6 @@ export default {
   },
   mounted() {
     this.getBusinessInfo();
-    console.log(this.SuggestionData.regionalImpacts.title);
     this.getSuggestion();
   },
 };

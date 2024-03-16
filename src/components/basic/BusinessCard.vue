@@ -5,7 +5,7 @@
   >
     <img
       class="w-full h-64 object-cover p-4"
-      :src="business.image"
+      src="../../assets/images/OIP-C.jpg"
       alt="商户图片"
     >
     <div class="px-6 py-2 font-bold text-xl">{{ business.name }}</div>
@@ -35,7 +35,7 @@
           >
             <path d="M7.05 3.691c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.372 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118L.98 9.483c-.784-.57-.381-1.81.587-1.81H5.03a1 1 0 00.95-.69L7.05 3.69z" />
           </svg>
-          {{ business.rating }}
+          {{ business.stars }}
         </span>
       </div>
     </div>
@@ -43,7 +43,10 @@
       <div class="font-bold mb-2">Categories: </div>
       <div>{{ business.categories }}</div>
     </div>
-    <div class="px-6 py-2">
+    <div
+      class="px-6 py-2"
+      v-if="Object.keys(formattedBusinessHours).length > 0"
+    >
       <div class="font-bold mb-2">营业时间</div>
       <ul class="list-disc pl-5">
         <li
@@ -68,6 +71,9 @@ export default {
   computed: {
     formattedBusinessHours() {
       const { hours } = this.business;
+      if (!hours) { // 如果hours为null或undefined，则返回空对象
+        return {};
+      }
       const formatted = {};
       Object.keys(hours).forEach((day) => {
         const time = hours[day];

@@ -27,7 +27,7 @@ import SearchBox from '@comp/basic/SearchBox.vue';
 import BusinessCard from '@comp/basic/BusinessCard.vue';
 import {
   getBusinessInfo,
-} from '@/api/business.js';
+} from '@/api/business';
 
 export default {
   components: {
@@ -43,8 +43,8 @@ export default {
       console.log('Selected business ID:', business_id);
       try {
         // 向后端发送请求获取businessInfo
-        const response = await getBusinessInfo(business_id);
-        this.businessInfo = response.data.data.businessInfo; // 更新businessInfo数据
+        const response = await getBusinessInfo({ business_id });
+        this.businessInfo = response.data.businessInfo; // 更新businessInfo数据
       } catch (error) {
         console.error('Error fetching business info:', error);
       }

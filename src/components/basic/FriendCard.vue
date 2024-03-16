@@ -9,20 +9,39 @@
         >
         <div>
           <p class="text-lg font-semibold text-gray-800">{{ friend.name }}</p>
-          <p class="text-sm text-gray-600">User ID: {{ friend.user_id }}</p>
-          <p class="text-sm text-gray-600">Followers: {{ friend.followers }}</p>
-          <p class="text-sm text-gray-600">City: {{ friend.city }}</p>
+          <p class="text-sm text-gray-600">AvgStars: {{ friend.average_stars }}</p>
+          <p class="text-sm text-gray-600">Fans: {{ friend.fans }}</p>
         </div>
         <button
           @click="addFriend(friend.id)"
-          class="bg-blue-500 hover:bg-blue-700 text-sm text-white font-bold py-3 px-4 rounded-full ml-10"
+          class="bg-blue-500 hover:bg-blue-700 text-sm text-white font-bold py-3 px-4 rounded-full ml-8"
         >
           Add friend
         </button>
       </div>
     </div>
     <div class="px-4 py-3">
-      <p class="text-gray-700 text-base">Hobbies: {{ friend.hobbies }}</p>
+      <!-- 评价统计信息展示 -->
+      <div class="mt-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div class="stat">
+            <p class="text-lg font-semibold">{{ friend.review_count }}</p>
+            <p class="text-sm text-gray-600">Reviews</p>
+          </div>
+          <div class="stat">
+            <p class="text-lg font-semibold">{{ friend.useful }}</p>
+            <p class="text-sm text-gray-600">Useful</p>
+          </div>
+          <div class="stat">
+            <p class="text-lg font-semibold">{{ friend.funny }}</p>
+            <p class="text-sm text-gray-600">Funny</p>
+          </div>
+          <div class="stat">
+            <p class="text-lg font-semibold">{{ friend.cool }}</p>
+            <p class="text-sm text-gray-600">Cool</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
