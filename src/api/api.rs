@@ -110,7 +110,7 @@ pub async fn get_business_info(query: web::Query<BusinessQuery>) -> impl Respond
     }
 }
 
-#[get("/user/getSuggestion")]
+#[get("/business/getSuggestion")]
 pub async fn get_suggestion() -> impl Responder {
     let file_contents = std::fs::read_to_string("dataset/advice.json").unwrap();
     let suggestion : Suggestion = serde_json::from_str(&file_contents).unwrap();
