@@ -113,3 +113,17 @@ pub struct BusinessAfterFilterInfo {
 pub struct BusinessesWrapper {
     pub businesses: Vec<BusinessAfterFilterInfo>
 }
+
+#[derive(Deserialize)]
+pub struct SearchParams {
+    pub latitude: String,
+    pub longitude: String,
+    pub city: String,
+    pub choice: String
+}
+
+#[derive(Deserialize, Serialize)]
+#[allow(non_snake_case)]
+pub struct Suggestion {
+    pub suggestionText: String
+}
