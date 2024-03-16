@@ -53,7 +53,7 @@ pub async fn search_for_business(_latitude: String, _longitude: String, _city: S
     let file_contents = std::fs::read_to_string("dataset/epic7_task3.json").unwrap();
     let business_with_filter: BusinessesWrapper = serde_json::from_str(&file_contents).unwrap();
     
-    match serde_json::to_value(&business_with_filter.businesses) {
+    match serde_json::to_value(&business_with_filter) {
         Ok(json_data) => HttpResponse::Ok().json(Response::<Value>{
             code: 200,
             data: Some(json_data)
