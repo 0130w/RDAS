@@ -2,7 +2,7 @@
   <div @click="handleClick">
     <article class="flex items-start space-x-6 p-6">
       <img
-        :src="business.image"
+        src="../../assets/images/Business_Avatur.jpg"
         alt=""
         width="60"
         height="88"

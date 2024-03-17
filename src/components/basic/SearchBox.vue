@@ -140,9 +140,9 @@ export default {
       selectedItems: [],
       activeChoice: '0',
       choices: [
-        { value: '0', label: '综合排序', isActive: true },
-        { value: '1', label: '距离优先', isActive: false },
-        { value: '2', label: '评分优先', isActive: false },
+        { value: '1', label: '综合排序', isActive: true },
+        { value: '2', label: '距离优先', isActive: false },
+        { value: '3', label: '评分优先', isActive: false },
       ],
       selectAll: false,
       options: [
